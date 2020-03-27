@@ -1,24 +1,31 @@
 package com.zyq.frechwind.bean;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
+import com.zyq.frechwind.base.TimeStamp;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="cms_user")
-public class User implements Serializable {
+public class User extends TimeStamp {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "userid_d", nullable = false, insertable = true, updatable = false, length = 32)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
     private String userId;
+
     @Column(name = "user_name")
     private String userName;
+
     @Column(name = "account")
     private String account;
+
     @Column(name = "password")
     private String password;
+
+    @Column(name = "del_flag")
+    private String delFlag;
 
     public String getUserId() {
         return userId;
@@ -50,5 +57,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
     }
 }

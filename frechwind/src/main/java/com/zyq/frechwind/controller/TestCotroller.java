@@ -1,5 +1,6 @@
 package com.zyq.frechwind.controller;
 
+import com.zyq.frechwind.bean.User;
 import com.zyq.frechwind.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class TestCotroller {
 
     @GetMapping("/index")
     public String Hello(Model model){
+//        List<User> userList = testService.userList();
 
         List<String> numberList = testService.numberList();
         model.addAttribute("numberList", numberList);

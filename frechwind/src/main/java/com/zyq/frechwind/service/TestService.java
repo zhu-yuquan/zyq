@@ -1,13 +1,28 @@
 package com.zyq.frechwind.service;
 
 
+import com.zyq.frechwind.base.Finder;
+import com.zyq.frechwind.bean.User;
+import com.zyq.frechwind.dao.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class TestService {
+
+    @Autowired
+    private UserDao userDao;
+
+
+//    public List<User> userList(){
+//        Finder finder = new Finder("User");
+//        return userDao.find(finder);
+//    }
 
     public List<String> numberList(){
         List<String> numberList = new ArrayList<>();
