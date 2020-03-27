@@ -1,0 +1,60 @@
+db:
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://:3306/zyq?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+  username: root
+  password: root
+
+# Hibernate
+hibernate:
+  dialect: org.hibernate.dialect.MySQL5Dialect
+  show_sql: true
+  hbm2ddl.auto: update
+  packagesToScan: com.zyq
+  cache:
+    use_second_level_cache: false
+
+server:
+  port: 8080
+spring:
+  application:
+    name: frechwind
+    index: /
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+  freemarker:
+    cache: false
+    charset: UTF-8
+    templateLoaderPath: classpath:/templates
+
+
+logging:
+  config: classpath:logback.xml
+  path: logs
+  LOG_PATH : logs
+
+
+hikari:
+  poolName: HikariCP
+  minimumIdle: 5
+  maximumPoolSize: 25
+  connectionTimeout: 30000
+  idleTimeout: 30000
+  connectionTestQuery: SELECT 1
+  #dataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+  dataSourceProperties:
+    ## Only for mysql
+    cachePrepStmts: true
+    prepStmtCacheSize: 300
+    prepStmtCacheSqlLimit: 2048
+
+haolue:
+  env: dev
+  hbm2ddl: true
+  daoUseRedis: false

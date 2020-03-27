@@ -19,10 +19,10 @@ public class TestService {
     private UserDao userDao;
 
 
-//    public List<User> userList(){
-//        Finder finder = new Finder("User");
-//        return userDao.find(finder);
-//    }
+    public List<User> userList(){
+        Finder finder = new Finder("User");
+        return userDao.find(finder);
+    }
 
     public List<String> numberList(){
         List<String> numberList = new ArrayList<>();
