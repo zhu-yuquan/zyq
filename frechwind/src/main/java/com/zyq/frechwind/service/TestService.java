@@ -1,6 +1,5 @@
 package com.zyq.frechwind.service;
 
-
 import com.zyq.frechwind.base.Finder;
 import com.zyq.frechwind.bean.User;
 import com.zyq.frechwind.dao.UserDao;
