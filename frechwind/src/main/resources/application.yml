@@ -46,7 +46,7 @@ hikari:
   maximumPoolSize: 25
   connectionTimeout: 30000
   idleTimeout: 30000
-  connectionTestQuery: SELECT 1
+  connectionTestQuery: SELECT
   #dataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
   dataSourceProperties:
     ## Only for mysql
