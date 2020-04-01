@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class User extends TimeStamp {
 
     @Id
-    @Column(name = "userid_d", nullable = false, insertable = true, updatable = false, length = 32)
+    @Column(name = "user_id", nullable = false, insertable = true, updatable = false, length = 32)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String userId;

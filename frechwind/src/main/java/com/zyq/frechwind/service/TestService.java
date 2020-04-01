@@ -23,6 +23,15 @@ public class TestService {
         return userDao.find(finder);
     }
 
+    public User create(){
+        User user = new User();
+        user.setAccount("123456");
+        user.setDelFlag("N");
+        user.setUserName("zyq");
+        user.setPassword("123456");
+        return userDao.create(user);
+    }
+
     public List<String> numberList(){
         List<String> numberList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {

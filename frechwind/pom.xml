@@ -23,11 +23,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- freemark -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -90,6 +85,11 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!-- freemark -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
 
         <!-- apache common -->
         <dependency>

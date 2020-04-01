@@ -37,10 +37,12 @@ public class TestCotroller {
 
     @GetMapping("/index")
     public String Hello(Model model){
+        testService.create();
         List<User> userList = testService.userList();
 
+        model.addAttribute("userList", userList);
         List<String> numberList = testService.numberList();
         model.addAttribute("numberList", numberList);
-        return "index/index";
+        return "/index/index";
     }
 }

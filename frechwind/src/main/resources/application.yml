@@ -31,7 +31,8 @@ spring:
   freemarker:
     cache: false
     charset: UTF-8
-    templateLoaderPath: classpath:/templates
+    templateLoaderPath: classpath:/templates/
+    suffix: .ftl
 
 
 logging:
