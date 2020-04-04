@@ -1,6 +1,8 @@
 package com.zyq.frechwind.controller;
 
+import com.zyq.frechwind.bean.Blog;
 import com.zyq.frechwind.bean.User;
+import com.zyq.frechwind.service.BlogService;
 import com.zyq.frechwind.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,8 @@ public class TestCotroller {
 
     @Autowired
     private TestService testService;
+    @Autowired
+    private BlogService blogService;
 
     @GetMapping("/ftl")
     public String TestFtlTemplate(Model model){
@@ -43,6 +47,14 @@ public class TestCotroller {
         model.addAttribute("userList", userList);
         List<String> numberList = testService.numberList();
         model.addAttribute("numberList", numberList);
+        return "/index/index";
+    }
+
+    @GetMapping("/blog")
+    public String blog(String title,String content,String userId,Model model){
+        Blog blog = blogService.create(title,content,userId);
+        List<Blog> blogList = blogService.blogList(userId);
+        model.addAttribute("blogList", blogList);
         return "/index/index";
     }
 }

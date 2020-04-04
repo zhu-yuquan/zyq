@@ -21,8 +21,11 @@ public class User extends TimeStamp {
     @Column(name = "account")
     private String account;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "pass_word")
+    private String passWord;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "del_flag")
     private String delFlag;
@@ -51,12 +54,20 @@ public class User extends TimeStamp {
         this.account = account;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDelFlag() {
