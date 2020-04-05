@@ -18,7 +18,6 @@ server:
 spring:
   application:
     name: frechwind
-    index: /
   http:
     encoding:
       charset: UTF-8

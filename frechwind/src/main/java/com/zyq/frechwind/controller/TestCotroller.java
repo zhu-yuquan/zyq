@@ -1,9 +1,11 @@
 package com.zyq.frechwind.controller;
 
+import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.bean.Blog;
 import com.zyq.frechwind.bean.User;
 import com.zyq.frechwind.service.BlogService;
 import com.zyq.frechwind.service.TestService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.*;
 
 @Controller
+@Api(value = "/rest", description = "测试")
 @RequestMapping(value = "/test")
+@SwaggerDoc
 public class TestCotroller {
 
     @Autowired

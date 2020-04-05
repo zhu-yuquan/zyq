@@ -37,10 +37,8 @@ public class UserService {
      * @return
      */
     public User userAccount(String account){
-        Finder finder = new Finder("User");
-        finder.equal("account", account);
-        finder.equal("delFlag", "N");
-        User user = userDao.getUnique(finder);
+        String hql = "from User where account=? and delFlag=?";
+        User user = userDao.getUnique(hql,account,"N");
         return user;
     }
 
@@ -51,11 +49,8 @@ public class UserService {
      * @return
      */
     public User login(String account, String passWord){
-        Finder finder = new Finder("User");
-        finder.equal("account", account);
-        finder.equal("passWord", passWord);
-        finder.equal("delFlag", "N");
-        User user = userDao.getUnique(finder);
+        String hql = "from User where account = ? and passWord = ? and delFlag = ?";
+        User user = userDao.getUnique(hql,account,passWord,"N");
         return user;
     }
 }

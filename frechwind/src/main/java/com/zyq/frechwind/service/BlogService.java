@@ -33,4 +33,22 @@ public class BlogService {
         return blogDao.create(blog);
     }
 
+    public Blog update(String blogId,String title,String content){
+        Blog blog = blogDao.get(blogId);
+        blog.setTitle(title);
+        blog.setContent(content);
+        blog.setDelFlag("N");
+        return blogDao.update(blog);
+    }
+
+    public Blog view(String blogId){
+        return blogDao.get(blogId);
+    }
+
+    public Blog delete(String blogId){
+        Blog blog = blogDao.get(blogId);
+        blog.setDelFlag("Y");
+        return blogDao.update(blog);
+    }
+
 }

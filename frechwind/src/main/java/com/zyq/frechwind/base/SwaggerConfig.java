@@ -21,7 +21,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()//选择那些路径和api会生成document
 //                .apis(RequestHandlerSelectors.any())//对所有api进行监控
-                //.apis(RequestHandlerSelectors.basePackage("com.haolue"))
+//                .apis(RequestHandlerSelectors.basePackage("com.zyq"))
                 .apis(RequestHandlerSelectors.withClassAnnotation(SwaggerDoc.class))
                 .paths(PathSelectors.any())//对所有路径进行监控
                 .build();
@@ -30,10 +30,10 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("EC接口")
-                .description("昊略软件出品")
-                .termsOfServiceUrl("http://www.haolue.com/")
-                .contact("昊略软件")
-                .version("1.0")
+                .description("zyq软件出品")
+                .termsOfServiceUrl("http://www.zyq.com/")
+                .contact("zyq软件")
+                .version("0.0.1")
                 .build();
     }
 }
