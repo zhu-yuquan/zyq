@@ -12,35 +12,31 @@
             background-size: 100%;
         }
         input{
+            outline-style: none;
             border: 1px solid rebeccapurple;
+            border-radius: 3px;
+            padding: 8px 5px;
             margin: 10px auto;
+            width: 60%;
+            font-weight: 300;
+            font-family: "Microsoft soft";
         }
-        .button {
-            background: #3498db;
-            background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-            background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-            background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-            background-image: -o-linear-gradient(top, #3498db, #2980b9);
-            background-image: linear-gradient(to bottom, #3498db, #2980b9);
-            -webkit-border-radius: 28;
-            -moz-border-radius: 28;
-            border-radius: 28px;
-            font-family: Arial;
-            color: #ffffff;
-            font-size: 16px;
-            padding: 12px 30px 12px 30px;
-            text-decoration: none;
+        button{
+            padding: 5px 8px;
+            background-image: linear-gradient(#f5c153, #ea920d);
+            border: 1px solid rgba(0,0,0,.2);
+            border-radius: .3em;
+            box-shadow: 0 1px white inset;
+            text-align: center;
+            text-shadow: 0 1px 1px black;
+            color:white;
+            font-weight: bold;
         }
 
-        .button:hover {
-            background: #2980b9;
-            background-image: -webkit-linear-gradient(top, #2980b9, #3498db);
-            background-image: -moz-linear-gradient(top, #2980b9, #3498db);
-            background-image: -ms-linear-gradient(top, #2980b9, #3498db);
-            background-image: -o-linear-gradient(top, #2980b9, #3498db);
-            background-image: linear-gradient(to bottom, #2980b9, #3498db);
-            color: #ffffff;
-            text-decoration: none;
+        button:hover {
+            box-shadow: 0 1px white inset;
+            border-color: rgba(0,0,0,.3);
+            background: #f5c153;
         }
     </style>
 </head>

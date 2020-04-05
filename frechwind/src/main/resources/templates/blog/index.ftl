@@ -23,7 +23,8 @@
     <#list blogList as blog>
         <a href="/blog/blog-view?blogId=${blog.blogId}">
         <div style="width: 90%;margin: 10px 5%;">
-            <div>${blog.title?if_exists}: ${blog.content?if_exists}</div>
+            <div>${blog.title?if_exists}</div>
+            <div>${blog.content?if_exists}</div>
         </div>
         </a>
         <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>

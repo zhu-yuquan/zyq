@@ -5,7 +5,6 @@ body{
 }
 ul,ol{list-style:none}
 img{border:0}
-button,input {line-height:normal;*overflow:visible}
-input,textarea{outline:none}
+
 a{color:#3B8DD1;text-decoration:none}
 a:hover{color:#8CAC52}

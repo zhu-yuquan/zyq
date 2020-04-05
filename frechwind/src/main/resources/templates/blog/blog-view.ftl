@@ -22,11 +22,11 @@
     <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
     <div style="width: 100%;text-align: center;">
         <a href="/blog/blog-edit?blogId=${blog.blogId?if_exists}">
-            <div style="width: 62%;text-align: center;color: #dddddd;margin: 15px auto;">
+            <div style="width: 62%;text-align: center;color: limegreen;margin: 15px auto;">
                 编辑
             </div>
         </a>
-        <a href="/blog/blog-delete?blogId=${blog.blogId?if_exists}">
+        <a href="/blog/blog-delete?blogId=${blog.blogId?if_exists}" onclick="return confirm('确定删除吗')">
             <div style="width: 62%;text-align: center;color: #dddddd;margin: 15px auto;">
                 删除
             </div>

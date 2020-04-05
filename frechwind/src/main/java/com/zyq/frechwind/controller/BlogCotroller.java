@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -63,14 +64,14 @@ public class BlogCotroller {
 
 
     @ApiOperation(value = "创建博客", notes = "创建博客")
-    @GetMapping("/blog-create")
+    @PostMapping("/blog-create")
     public String blogCreate(String userId,String title, String content, Model model){
         Blog blog = blogService.create(title,content,userId);
         return "redirect:/blog/blog-list?userId=" + userId;
     }
 
     @ApiOperation(value = "更新博客", notes = "更新博客")
-    @GetMapping("/blog-update")
+    @PostMapping("/blog-update")
     public String blogUpdate(String blogId,String title, String content, Model model){
         Blog blog = blogService.update(blogId,title,content);
         return "redirect:/blog/blog-list?userId=" + blog.getUserId();
@@ -80,7 +81,7 @@ public class BlogCotroller {
     @GetMapping("/blog-delete")
     public String blogDelete(String blogId, Model model){
         Blog blog = blogService.delete(blogId);
-        return "redirect:/blog/blog-list?userId=" + blogId;
+        return "redirect:/blog/blog-list?userId=" + blog.getUserId();
     }
 
 }
