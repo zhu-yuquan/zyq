@@ -21,6 +21,7 @@ public class BlogService {
         Finder finder = new Finder("Blog");
         finder.equal("userId", userId);
         finder.equal("delFlag", "N");
+        finder.order("createTime", "desc");
         return blogDao.find(finder);
     }
 

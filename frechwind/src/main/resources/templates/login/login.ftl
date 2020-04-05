@@ -6,6 +6,7 @@
     <title>登录</title>
     <link rel="stylesheet" href="../css/zyq.css">
     <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.validate.js"></script>
     <style type="text/css">
         Body{
             background:url("../images/loginback.jpg") repeat-y;
@@ -49,10 +50,10 @@
         <div style="margin: 5% auto; width: 100%;text-align: center;">
             <div style="width: 100%;color: red;text-align: center;">${message?if_exists}</div>
             <div style="width: 100%; color: white;">
-                账号：<input type="text" name="userName"/>
+                账号：<input type="text" name="userName" placeholder="请输入账号" required/>
             </div>
             <div style="width: 100%;color: white;">
-                密码：<input type="password" name="passWord"/>
+                密码：<input type="password" name="passWord" placeholder="请输入密码" required/>
             </div>
             <div style="width: 100%;">
                 <div style="float: left;width: 50%;">
