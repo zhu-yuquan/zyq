@@ -33,6 +33,8 @@ public class BlogCotroller {
     @ApiOperation(value = "用户博客列表", notes = "用户博客列表")
     @GetMapping("/blog-list")
     public String blogList(String userId, Model model){
+
+        model.addAttribute("userId", userId);
         List<Blog> blogList = blogService.blogList(userId);
         model.addAttribute("blogList", blogList);
         return "/blog/index";
@@ -45,6 +47,19 @@ public class BlogCotroller {
         model.addAttribute("blog", blog);
         return "/blog/blog-view";
     }
+    @ApiOperation(value = "添加博客", notes = "添加博客")
+    @GetMapping("/blog-add")
+    public String blogAdd(String userId, Model model){
+        model.addAttribute("userId", userId);
+        return "/blog/blog-create";
+    }
+    @ApiOperation(value = "编辑博客", notes = "编辑博客")
+    @GetMapping("/blog-edit")
+    public String blogEdit(String blogId, Model model){
+        Blog blog = blogService.view(blogId);
+        model.addAttribute("blog", blog);
+        return "/blog/blog-update";
+    }
 
 
     @ApiOperation(value = "创建博客", notes = "创建博客")
@@ -54,8 +69,8 @@ public class BlogCotroller {
         return "redirect:/blog/blog-list?userId=" + userId;
     }
 
-    @ApiOperation(value = "编辑博客", notes = "编辑博客")
-    @GetMapping("/blog-create")
+    @ApiOperation(value = "更新博客", notes = "更新博客")
+    @GetMapping("/blog-update")
     public String blogUpdate(String blogId,String title, String content, Model model){
         Blog blog = blogService.update(blogId,title,content);
         return "redirect:/blog/blog-list?userId=" + blog.getUserId();

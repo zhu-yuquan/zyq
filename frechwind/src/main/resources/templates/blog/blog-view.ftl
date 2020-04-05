@@ -20,6 +20,19 @@
         <div>${blog.title?if_exists}: ${blog.content?if_exists}</div>
     </div>
     <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
+    <div style="width: 100%;text-align: center;">
+        <a href="/blog/blog-edit?blogId=${blog.blogId?if_exists}">
+            <div style="width: 62%;text-align: center;color: #dddddd;margin: 15px auto;">
+                编辑
+            </div>
+        </a>
+        <a href="/blog/blog-delete?blogId=${blog.blogId?if_exists}">
+            <div style="width: 62%;text-align: center;color: #dddddd;margin: 15px auto;">
+                删除
+            </div>
+        </a>
+
+    </div>
 </div>
 </body>
 </html>

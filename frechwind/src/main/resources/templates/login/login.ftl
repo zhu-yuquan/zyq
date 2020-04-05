@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../css/zyq.css">
     <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
     <style type="text/css">
+        Body{
+            background:url("../images/loginback.jpg") repeat-y;
+            background-size: 100%;
+        }
         input{
             border: 1px solid rebeccapurple;
             margin: 10px auto;
@@ -41,9 +45,6 @@
     </style>
 </head>
 <body>
-<div style="position: absolute;width: 100%;height: 100%;z-index: -1;">
-    <img src="../images/loginback.jpg" width="100%" height="100%">
-</div>
 <div style="position: absolute;width: 100%;height: 100px;">
     <form action="/user/login" method="get">
         <div style="margin: 20% auto 0 auto; width: 100%;text-align: center;color: white;">

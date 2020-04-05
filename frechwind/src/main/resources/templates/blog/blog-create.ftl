@@ -13,22 +13,23 @@
 <body>
 <div style="width: 100%;">
     <div style="padding-left: 5%;color: rebeccapurple;">
-        <h5>我的领地我做主</h5>
+        <div><h5>我的领地我做主</h5></div>
     </div>
     <form action="/blog/blog-create" method="get">
+        <input type="hidden" name="userId" value="${userId?if_exists}"/>
         <div style="width: 90%;margin: 10px 5%;">
             <div><input type="text" name="title" placeholder="请输入标题"/></div>
         </div>
         <div style="width: 90%;margin: 10px 5%;">
-            <div><textarea name="content" rows="30" placeholder="请输入内容"></textarea></div>
+            <div><textarea name="content" rows="30" style="width: 100%;" placeholder="请输入内容"></textarea></div>
         </div>
         <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
-        <div style="width: 100%;">
+        <div style="width: 90%;margin: 10px 5%;">
             <div style="float: left;width: 50%;">
                 <button type="reset" >重置</button>
             </div>
-            <div style="float: left;width: 50%;">
-                <button type="submit" >登录</button>
+            <div style="float: left;width: 50%;text-align: right;">
+                <button type="submit" >提交</button>
             </div>
         </div>
     </form>
