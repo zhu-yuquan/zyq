@@ -23,12 +23,15 @@ public class UserService {
     }
 
     public User create(String userName, String password, String email){
-        User user = new User();
-        user.setAccount(userName);
-        user.setDelFlag("N");
-        user.setUserName(userName);
-        user.setPassWord(password);
-        return userDao.create(user);
+        User user = userAccount(userName);
+        if (user == null){
+            user.setAccount(userName);
+            user.setDelFlag("N");
+            user.setUserName(userName);
+            user.setPassWord(password);
+            user = userDao.create(user);
+        }
+        return user;
     }
 
     /**

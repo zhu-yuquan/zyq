@@ -43,7 +43,47 @@
             border-color: rgba(0,0,0,.3);
             background: #f5c153;
         }
+        img[src=""],img:not([src]){
+            opacity:0;
+        }
     </style>
+    <script>
+        function uploadPhoto() {
+            $("#photoFile").click();
+        }
+
+        /**
+         * 上传图片
+         */
+        function upload() {
+            if ($("#photoFile").val() == '') {
+                return;
+            }
+            var formData = new FormData();
+            formData.append('uploadFile', document.getElementById('photoFile').files[0]);
+            formData.append("ownerType", "blogImage");
+            formData.append("ownerId", "${userId?if_exists}");
+            formData.append("bizType", "Blog");
+            $.ajax({
+                url:"/rest-cms-upload/upload",
+                type:"post",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.status == "success") {
+                        $("#preview_photo").attr("src", data.src);
+                        $("#productImg").val(data.filename);
+                    } else {
+                        alert(data.ownerType);
+                    }
+                },
+                error:function(data) {
+                    alert("上传失败")
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div style="width: 100%;">
@@ -58,6 +98,15 @@
         <div style="width: 90%;margin: 10px 5%;">
             <textarea name="content" rows="8" placeholder="请输入内容" required></textarea>
         </div>
+        <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
+        <div style="width: 90%;margin: 10px 5%;">
+            <input type="file" id="photoFile" style="display: none;" onchange="upload()">
+            <a href="javascript:void(0)" onclick="uploadPhoto()">
+                <img src="../images/upload.jpg" width="80px" height="80px"/>
+            </a>
+            <img id="preview_photo" src="" width="100px" height="100px">
+        </div>
+
         <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
         <div style="width: 90%;margin: 10px 5%;">
             <div style="float: left;width: 50%;">

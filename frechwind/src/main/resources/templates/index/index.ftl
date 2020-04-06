@@ -9,14 +9,53 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <style>
+        img[src=""],img:not([src]){
+            opacity:0;
+        }
+    </style>
+    <script>
+        function uploadPhoto() {
+            $("#photoFile").click();
+        }
+
+        /**
+         * 上传图片
+         */
+        function upload() {
+            if ($("#photoFile").val() == '') {
+                return;
+            }
+            var formData = new FormData();
+            formData.append('uploadFile', document.getElementById('photoFile').files[0]);
+            formData.append("ownerType", "blogImage");
+            formData.append("ownerId", "402881827145d9f1017148db6c490000");
+            formData.append("bizType", "blogImage");
+            $.ajax({
+                url:"/rest-cms-upload/upload",
+                type:"post",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.status == "success") {
+                        $("#preview_photo").attr("src", data.src);
+                        $("#productImg").val(data.filename);
+                    } else {
+                        alert(data.ownerType);
+                    }
+                },
+                error:function(data) {
+                    alert("上传失败")
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-<form action="/rest-cms-upload/upload" method="post" nctype="multipart/form-data">
-    <input type="file" name="uploadFile">
-    <input type="hidden" name="ownerType" value="blogImage">
-    <input type="hidden" name="ownerId" value="402881827145d9f1017148db6c490000">
-    <input type="hidden" name="bizType" value="blogImage">
-    <button type="submit" value="上传文件">文件上传</button>
-</form>
+    <input type="file" id="photoFile" style="display: none;" onchange="upload()">
+    <a href="javascript:void(0)" onclick="uploadPhoto()">选择图片</a>
+    <img id="preview_photo" src="" width="200px" height="200px">
 </body>
 </html>

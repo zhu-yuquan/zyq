@@ -47,6 +47,9 @@
     </style>
 </head>
 <body>
+<#--<div style="position: fixed;top: 0;left: 0;z-index: -1;width: 100%;height: 100%;">-->
+    <#--<img src="../images/loginback.jpg" width="100%" height="100%"/>-->
+<#--</div>-->
 <div style="position: absolute;width: 100%;height: 100px;">
     <form action="/user/login" method="get">
         <div style="margin: 20% auto 0 auto; width: 100%;text-align: center;color: white;">

@@ -1,6 +1,6 @@
 db:
   driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://:3306/zyq?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+  url: jdbc:mysql://:3306/zyqblog?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
   username: root
   password: root
 
@@ -14,7 +14,9 @@ hibernate:
     use_second_level_cache: false
 
 server:
-  port: 8080
+  port: 80
+
+
 spring:
   application:
     name: frechwind
@@ -27,6 +29,8 @@ spring:
     multipart:
       maxFileSize: 100MB
       maxRequestSize: 100MB
+  resources:
+    static-locations: classpath:/static/
   freemarker:
     cache: false
     charset: UTF-8
@@ -36,8 +40,7 @@ spring:
 
 logging:
   config: classpath:logback.xml
-  path: logs
-  LOG_PATH : logs
+  LOG_PATH: logs
 
 
 hikari:

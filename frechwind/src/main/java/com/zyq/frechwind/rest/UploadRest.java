@@ -1,4 +1,4 @@
-package com.zyq.frechwind.pub.rest;
+package com.zyq.frechwind.rest;
 
 import com.zyq.frechwind.base.AppException;
 import com.zyq.frechwind.base.SwaggerDoc;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +60,7 @@ public class UploadRest {
         map.put("ownerType", ownerType);
         map.put("ownerId", ownerId);
         map.put("src", upload.getAbsolutePath());
+        map.put("extName", extName);
         map.put("status", "success");
         response.setStatus(200);
         return map;

@@ -1,9 +1,11 @@
 package com.zyq.frechwind.bean;
 
 import com.zyq.frechwind.base.TimeStamp;
+import com.zyq.frechwind.pub.bean.Upload;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="cms_blog")
@@ -26,6 +28,9 @@ public class Blog extends TimeStamp {
 
     @Column(name = "del_flag")
     private String delFlag;
+
+    @Transient
+    private List<Upload> uploadList;
 
     public String getBlogId() {
         return blogId;
@@ -65,5 +70,13 @@ public class Blog extends TimeStamp {
 
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public List<Upload> getUploadList() {
+        return uploadList;
+    }
+
+    public void setUploadList(List<Upload> uploadList) {
+        this.uploadList = uploadList;
     }
 }
