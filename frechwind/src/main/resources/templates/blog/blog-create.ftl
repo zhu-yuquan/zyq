@@ -91,12 +91,23 @@
         <div><h5>我的领地我做主</h5></div>
     </div>
     <form action="/blog/blog-create" method="post">
+        <div style="width: 90%;margin: 10px 5%;">
+            <div style="float: left;width: 50%;">
+                <a href="javascript:;" onclick="javascript:history.go(-1);">
+                    <button type="button" class="button">返回</button>
+                </a>
+            </div>
+            <div style="float: right;width: 50%;text-align: right;">
+                <button type="submit" class="button">提交</button>
+            </div>
+        </div>
+        <div style="height: 40px;width: 100%;"></div>
         <input type="hidden" name="userId" value="${userId?if_exists}"/>
         <div style="width: 90%;margin: 10px 5%;">
-            <div><input type="text" name="title" placeholder="请输入标题" required/></div>
+            <div><input type="text" name="title" placeholder="请输入标题"/></div>
         </div>
         <div style="width: 90%;margin: 10px 5%;">
-            <textarea name="content" rows="8" placeholder="请输入内容" required></textarea>
+            <textarea name="content" rows="8" placeholder="请输入内容"></textarea>
         </div>
         <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
         <div style="width: 90%;margin: 10px 5%;">
@@ -108,14 +119,7 @@
         </div>
 
         <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
-        <div style="width: 90%;margin: 10px 5%;">
-            <div style="float: left;width: 50%;">
-                <button type="reset" class="button">重置</button>
-            </div>
-            <div style="float: left;width: 50%;text-align: right;">
-                <button type="submit" class="button">提交</button>
-            </div>
-        </div>
+
     </form>
 
 </div>

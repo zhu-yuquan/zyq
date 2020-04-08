@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
  * 文件读取工具类
  */
@@ -90,6 +91,13 @@ public class FileUtil {
         }
 
         return "文件尺寸大小出现计算错误。";
+    }
+
+    //把file对象转换成相对路径，加上域名即可访问。
+    public static String projectRelativePath(File file) {
+        String relativePath = relativePath(file);
+        relativePath = relativePath.substring(("/upload/zyq").length());
+        return relativePath;
     }
 
     //把file对象的物理磁盘路径，转换成相对路径，加上域名即可访问。

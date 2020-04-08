@@ -45,7 +45,7 @@ public class TestCotroller {
 
     @GetMapping("/index")
     public String Hello(Model model){
-        testService.create();
+//        testService.create();
         List<User> userList = testService.userList();
 
         model.addAttribute("userList", userList);

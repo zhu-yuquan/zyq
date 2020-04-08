@@ -17,15 +17,17 @@
     </div>
     <div style="width: 90%;margin: 10px 5%;">
         <div>标题：${blog.title?if_exists}</div>
-        <div>${blog.title?if_exists}: ${blog.content?if_exists}</div>
+        <div>${blog.content?if_exists}</div>
     </div>
-    <div style="width: 90%;margin: 10px 5%;">
-        <#list blog.uploadList as upload>
-            <div style="float: left;width: 31%;margin: 1.1%;">
-                <img src="${upload.absolutePath?if_exists}" width="100%" height="100%"/>
-            </div>
-        </#list>
-    </div>
+    <#if blog.uploadList?size != 0>
+        <div style="position: relative;width: 90%;min-height: 115px;min-height: 115px;max-height: 340px;overflow: hidden;margin: 10px 5%;">
+            <#list blog.uploadList as upload>
+                <div style="float: left;width: 31%;margin:0.2% 1.1%;">
+                    <img src="${upload.absolutePath?if_exists}" width="103px" height="103px"/>
+                </div>
+            </#list>
+        </div>
+    </#if>
     <div style="border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
     <div style="width: 100%;text-align: center;">
         <a href="/blog/blog-edit?blogId=${blog.blogId?if_exists}">

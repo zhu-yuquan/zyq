@@ -30,8 +30,8 @@
             var formData = new FormData();
             formData.append('uploadFile', document.getElementById('photoFile').files[0]);
             formData.append("ownerType", "blogImage");
-            formData.append("ownerId", "402881827145d9f1017148db6c490000");
-            formData.append("bizType", "blogImage");
+            formData.append("ownerId", "40288182714ecdaf01714ece75cf0000");
+            formData.append("bizType", "Blog");
             $.ajax({
                 url:"/rest-cms-upload/upload",
                 type:"post",

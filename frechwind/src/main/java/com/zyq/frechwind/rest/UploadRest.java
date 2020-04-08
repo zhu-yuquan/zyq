@@ -1,8 +1,8 @@
 package com.zyq.frechwind.rest;
 
 import com.zyq.frechwind.base.AppException;
-import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.pub.bean.FileUtil;
+import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.pub.bean.Upload;
 import com.zyq.frechwind.pub.service.UploadService;
 import io.swagger.annotations.Api;
