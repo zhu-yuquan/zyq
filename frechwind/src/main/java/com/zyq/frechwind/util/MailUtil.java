@@ -26,7 +26,7 @@ public class MailUtil {
     private String affix = ""; // 附件地址
     private String affixName = ""; // 附件名称
     private String user = "zhu_yuquan6@163.com"; // 用户名
-    private String pwd = "FLQLLATIBVMAIZDA"; // 密码
+    private String pwd = "FWRYWTWXSDHUBRPD"; // 密码
     private String title = ""; // 邮件标题
     private String content="";//邮件内容
 
