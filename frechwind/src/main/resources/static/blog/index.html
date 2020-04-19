@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>个人博客</title>
+    <link rel="stylesheet" href="../css/zyq.css">
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/vue.min.2.4.2.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/pub.js"></script>
+
+</head>
+<body>
+<div style="width: 100%;" id="vmblog">
+    <div style="margin: 0 5%;width: 90%;color: rebeccapurple;">
+        <div style="width: 50%;float: left;">
+            <h5>我的领地我做主</h5>
+        </div>
+        <div style="width: 50%;float: left;text-align: right;">
+            <a href="">
+                <h5>发布我的博客</h5>
+            </a>
+        </div>
+    </div>
+    <div v-for="(blog, index) in blogList">
+        <a href="#" >
+            <div style="width: 90%;margin: 10px 5%;">
+                <div>{{blog.title}}</div>
+                <div>{{blog.content}}</div>
+            </div>
+        </a>
+        <div class="upload-content" v-if="blog.uploadList.length!=0">
+            <div class="upload-content-img" v-for="(upload, index) in blog.uploadList">
+                <img :src="upload.absolutePath" width="103px" height="103px"/>
+            </div>
+        </div>
+        <div class="btn-line"></div>
+    </div>
+</div>
+
+
+<script>
+    var vmblog = new Vue({
+        el: '#vmblog',
+        data: {
+            userId: "40288182714ecdaf01714ece75cf0000", //
+            blogList: [], //
+        },
+        created: function () {
+            /*初始化加载参数*/
+            var that = this;
+            that.loadData();
+        },
+        updated: function () {
+
+        },
+        methods: {
+            loadData: function () {
+                var that = this;
+                app.pubAjaxGet("/rest-blog/blog-list",{
+                    userId: that.userId
+                },function (data) {
+                    console.log("博客列表" + data)
+                    var blogList = data;
+                    for(var i=0;i<blogList.length; i++){
+                        var uploadList = blogList[i].uploadList;
+                        for (var j=0;j<uploadList.length;j++){
+                            uploadList[j].absolutePath = app.imgSize(uploadList[j].absolutePath,206,206);
+                        }
+                    }
+                    that.blogList = blogList;
+                })
+
+            },
+            goback: function () {
+                console.log("go back");
+            },
+        }
+    });
+    function departmentSave() {
+        var validate = $("#addDepartmentForm").validate();
+        if (validate.form()) {
+            $(".content-wrapper").pubAjaxPost("/rest-department/department-create", $("#addDepartmentForm").serialize(), function (res) {
+                console.log("修改成功");
+                $(".content-wrapper").myload('/admin-auth/department-list.html');
+            })
+        }
+    }
+</script>
+
+</body>
+</html>

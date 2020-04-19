@@ -1,17 +1,27 @@
 package com.zyq.frechwind.base;
 
+import com.alibaba.simpleimage.ImageWrapper;
+import com.alibaba.simpleimage.SimpleImageException;
+import com.alibaba.simpleimage.util.ImageReadHelper;
+import com.zyq.frechwind.pub.bean.FileUtil;
 import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @WebFilter(filterName = "uploadImgFilter", urlPatterns = "/upload/*")
 public class UploadImgFilter implements Filter {
+    private static Logger logger = LoggerFactory.getLogger(UploadImgFilter.class);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
@@ -48,13 +58,9 @@ public class UploadImgFilter implements Filter {
                 //log.info("bigFile:" + bigFile);
                 if (bigFile.exists()) {
                     //如果大图存在
-                    try {
-                        scaleAndCut(bigFile, smallImgFile, width, height);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    ImageImageTwo.compress(new FileInputStream(bigFile),smallImgFile,width,height);
                 } else {
-                    //log.info("can't find bigFile:" + bigImgFile);
+                    logger.info("can't find bigFile:" + bigImgFile);
                 }
             }
         }
@@ -83,9 +89,6 @@ public class UploadImgFilter implements Filter {
      * @param h
      */
     public final static void scaleAndCut(File in, File out, int w, int h) throws IOException {
-        Thumbnails.of(in)
-                // 图片缩放率，不能和size()一起使用
-                //.scale(scale)
-                .size(w, h).toFile(out);
+        Thumbnails.of(in).size(w, h).toFile(out);
     }
 }

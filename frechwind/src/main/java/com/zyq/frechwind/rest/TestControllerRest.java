@@ -15,18 +15,16 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@Api(value = "/rest-test", description = "用户信息")
-@RequestMapping("/rest-test")
+@Api(value = "/rest-blog", description = "用户信息")
+@RequestMapping("/rest-blog")
 @SwaggerDoc
 public class TestControllerRest {
     @Autowired
     private BlogService blogService;
 
-    @GetMapping("/blog")
-    public String blog(String title, String content, String userId, Model model){
-        Blog blog = blogService.create(title,content,userId);
+    @GetMapping("/blog-list")
+    public List<Blog> blogList(String userId){
         List<Blog> blogList = blogService.blogList(userId);
-        model.addAttribute("blogList", blogList);
-        return "/index/index";
+        return blogList;
     }
 }

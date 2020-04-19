@@ -3,8 +3,43 @@ body{
     margin: 0px;
     padding: 0px;
 }
-ul,ol{list-style:none}
-img{border:0}
 
-a{color:#3B8DD1;text-decoration:none}
-a:hover{color:#8CAC52}
+ul, ol {
+    list-style: none
+}
+
+img {
+    border: 0
+}
+
+a {
+    color: #3B8DD1;
+    text-decoration: none
+}
+
+a:hover {
+    color: #8CAC52
+}
+
+.btn-line {
+    border-top: 1px solid #ddd;
+    text-align: center;
+    position: relative;
+    background: #fff;
+    margin: 0 5%;
+}
+
+.upload-content {
+    position: relative;
+    width: 90%;
+    min-height: 115px;
+    max-height: 340px;
+    overflow: hidden;
+    margin: 10px 5%;
+}
+
+.upload-content-img {
+    float: left;
+    width: 31%;
+    margin: 0.2% 1.1%;
+}

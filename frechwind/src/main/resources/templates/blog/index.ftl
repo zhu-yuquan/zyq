@@ -21,22 +21,25 @@
         </div>
     </div>
     <#list blogList as blog>
-        <a href="/blog/blog-view?blogId=${blog.blogId}">
-            <div style="width: 90%;margin: 10px 5%;">
-                <div>${blog.title?if_exists}</div>
-                <div>${blog.content?if_exists}</div>
-            </div>
-        </a>
-        <#if blog.uploadList?size != 0>
-            <div style="position: relative;width: 90%;min-height: 115px;max-height: 340px;overflow: hidden;margin: 10px 5%;">
-                <#list blog.uploadList as upload>
-                    <div style="float: left;width: 31%;margin:0.2% 1.1%;">
-                        <img src="${upload.absolutePath?if_exists}" width="103px" height="103px"/>
-                    </div>
-                </#list>
-            </div>
-        </#if>
-        <div style="width 90%;border-top: 1px solid #ddd; text-align: center;position: relative;background: #fff; margin: 0 5%;"></div>
+        <div>
+            <a href="/blog/blog-view?blogId=${blog.blogId}">
+                <div style="width: 90%;margin: 10px 5%;">
+                    <div>${blog.title?if_exists}</div>
+                    <div>${blog.content?if_exists}</div>
+                </div>
+            </a>
+            <#if blog.uploadList?size != 0>
+                <div style="position: relative;width: 90%;min-height: 115px;max-height: 340px;overflow: hidden;margin: 10px 5%;">
+                    <#list blog.uploadList as upload>
+                        <div style="float: left;width: 31%;margin:0.2% 1.1%;">
+                            <img src="${upload.absolutePath?if_exists}" width="103px" height="103px"/>
+                        </div>
+                    </#list>
+                </div>
+            </#if>
+            <div class="btn-line"></div>
+        </div>
+
     </#list>
 </div>
 </body>

@@ -30,7 +30,7 @@ spring:
       maxFileSize: 100MB
       maxRequestSize: 100MB
   resources:
-    static-locations: classpath:/static/
+    static-locations: classpath:/static
   freemarker:
     cache: false
     charset: UTF-8

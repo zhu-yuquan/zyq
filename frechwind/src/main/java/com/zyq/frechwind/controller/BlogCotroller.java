@@ -2,9 +2,7 @@ package com.zyq.frechwind.controller;
 
 import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.bean.Blog;
-import com.zyq.frechwind.bean.User;
 import com.zyq.frechwind.service.BlogService;
-import com.zyq.frechwind.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

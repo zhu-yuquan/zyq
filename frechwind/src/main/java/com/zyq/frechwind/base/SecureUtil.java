@@ -2,16 +2,16 @@ package com.zyq.frechwind.base;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.owasp.validator.html.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-//import org.owasp.validator.html.*;
 
 @Service
 public class SecureUtil {
@@ -158,7 +158,6 @@ public class SecureUtil {
         }
     }
 
-    /*
     public static String xssClean(String value) {
         AntiSamy antiSamy = new AntiSamy();
         try {
@@ -175,9 +174,7 @@ public class SecureUtil {
         }
         return value;
     }
-    */
 
-    /*
     public static ArrayList<String> errorHtmlMessages(String value) {
         AntiSamy antiSamy = new AntiSamy();
         try {
@@ -193,7 +190,6 @@ public class SecureUtil {
             throw new AppException(e);
         }
     }
-    */
 
     /**
      * 全角转半角
