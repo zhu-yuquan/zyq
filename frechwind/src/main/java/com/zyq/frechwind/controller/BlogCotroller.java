@@ -3,6 +3,7 @@ package com.zyq.frechwind.controller;
 import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.bean.Blog;
 import com.zyq.frechwind.service.BlogService;
+import com.zyq.frechwind.util.SiteImgUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class BlogCotroller {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private SiteImgUtil siteImgUtil;
 
     /**
      * 用户博客列表
@@ -36,6 +39,7 @@ public class BlogCotroller {
         model.addAttribute("userId", userId);
         List<Blog> blogList = blogService.blogList(userId);
         model.addAttribute("blogList", blogList);
+        model.addAttribute("siteImgUtil", siteImgUtil);
         return "/blog/index";
     }
 
@@ -44,6 +48,7 @@ public class BlogCotroller {
     public String blogView(String blogId, Model model){
         Blog blog = blogService.view(blogId);
         model.addAttribute("blog", blog);
+        model.addAttribute("siteImgUtil", siteImgUtil);
         return "/blog/blog-view";
     }
     @ApiOperation(value = "添加博客", notes = "添加博客")

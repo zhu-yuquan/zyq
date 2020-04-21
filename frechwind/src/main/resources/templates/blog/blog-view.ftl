@@ -23,7 +23,7 @@
         <div style="position: relative;width: 90%;min-height: 115px;min-height: 115px;max-height: 340px;overflow: hidden;margin: 10px 5%;">
             <#list blog.uploadList as upload>
                 <div style="float: left;width: 31%;margin:0.2% 1.1%;">
-                    <img src="${upload.absolutePath?if_exists}" width="103px" height="103px"/>
+                    <img src="${siteImgUtil.addImgSizeOnShow(upload.absolutePath?if_exists,206,206)}" width="103px" height="103px"/>
                 </div>
             </#list>
         </div>
