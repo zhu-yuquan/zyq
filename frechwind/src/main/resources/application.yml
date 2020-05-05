@@ -1,3 +1,6 @@
+## See http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+# Database
 db:
   driver: com.mysql.jdbc.Driver
   url: jdbc:mysql://:3306/zyqblog?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
@@ -58,6 +61,6 @@ hikari:
     prepStmtCacheSqlLimit: 2048
 
 haolue:
-  env: dev
+  env: prd
   hbm2ddl: true
   daoUseRedis: false
