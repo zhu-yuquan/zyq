@@ -6,6 +6,17 @@
     <title>个人博客</title>
     <link rel="stylesheet" href="../css/zyq.css">
     <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+        })
+        // function maxImg(el){
+        //     alert("1234");
+        //     alert("el=" + el);
+        //     alert("el.src=" + el.src);
+        // }
+    </script>
     <style>
 
     </style>
@@ -24,15 +35,22 @@
         <div>
             <a href="/blog/blog-view?blogId=${blog.blogId}">
                 <div style="width: 90%;margin: 10px 5%;">
-                    <div>${blog.title?if_exists}</div>
+                    <div>${blog.title?if_exists}${blog.createTime?string("yyyy-MM-dd HH:mm:ss")!}</div>
                     <div>${blog.content?if_exists}</div>
                 </div>
             </a>
             <#if blog.uploadList?size != 0>
                 <div style="position: relative;width: 90%;min-height: 115px;max-height: 340px;overflow: hidden;margin: 10px 5%;">
                     <#list blog.uploadList as upload>
-                        <div style="float: left;width: 31%;margin:0.2% 1.1%;">
-                            <img src="${siteImgUtil.addImgSizeOnShow(upload.absolutePath?if_exists,206,206)}" width="103px" height="103px"/>
+                        <div class="upload-content-img">
+                            <#if upload.type=="mp4">
+                                <video width="320" height="240" controls>
+                                    <source src="${upload.absolutePath?if_exists}"  type="video/mp4">
+                                </video>
+                            <#else>
+                                <img src="${siteImgUtil.addImgSizeOnShow(upload.absolutePath?if_exists,206,206)}" width="103" height="103" class="preview" onclick="maxImg(this)"/>
+                            </#if>
+
                         </div>
                     </#list>
                 </div>

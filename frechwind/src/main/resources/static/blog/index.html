@@ -33,7 +33,14 @@
         </a>
         <div class="upload-content" v-if="blog.uploadList.length!=0">
             <div class="upload-content-img" v-for="(upload, index) in blog.uploadList">
-                <img :src="upload.absolutePath" width="103px" height="103px"/>
+                <div v-if="upload.type=='mp4'">
+                    <video width="320" height="240" controls>
+                        <source :src="upload.absolutePath"  type="video/mp4">
+                    </video>
+                </div>
+                <div v-else>
+                    <img :src="upload.absolutePath" width="103px" height="103px"/>
+                </div>
             </div>
         </div>
         <div class="btn-line"></div>
@@ -67,7 +74,9 @@
                     for(var i=0;i<blogList.length; i++){
                         var uploadList = blogList[i].uploadList;
                         for (var j=0;j<uploadList.length;j++){
-                            uploadList[j].absolutePath = app.imgSize(uploadList[j].absolutePath,206,206);
+                            if (uploadList[j].type!="mp4"){
+                                uploadList[j].absolutePath = app.imgSize(uploadList[j].absolutePath,206,206);
+                            }
                         }
                     }
                     that.blogList = blogList;
