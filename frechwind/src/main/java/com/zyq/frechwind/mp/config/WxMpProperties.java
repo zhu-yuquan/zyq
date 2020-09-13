@@ -1,6 +1,6 @@
 package com.zyq.frechwind.mp.config;
 
-import com.github.binarywang.demo.wx.mp.utils.JsonUtils;
+import com.zyq.frechwind.mp.utils.JsonUtils;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

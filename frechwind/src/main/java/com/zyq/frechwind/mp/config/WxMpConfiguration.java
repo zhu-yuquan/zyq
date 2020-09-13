@@ -1,17 +1,14 @@
 package com.zyq.frechwind.mp.config;
 
-import com.github.binarywang.demo.wx.mp.handler.*;
+import com.zyq.frechwind.mp.handler.*;
 import lombok.AllArgsConstructor;
-import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
-import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +20,8 @@ import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType;
 import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType.EVENT;
 import static me.chanjar.weixin.mp.constant.WxMpEventConstants.CustomerService.*;
 import static me.chanjar.weixin.mp.constant.WxMpEventConstants.POI_CHECK_NOTIFY;
+
+//import redis.clients.jedis.JedisPool;
 
 /**
  * wechat mp configuration
@@ -57,13 +56,13 @@ public class WxMpConfiguration {
         service.setMultiConfigStorages(configs
             .stream().map(a -> {
                 WxMpDefaultConfigImpl configStorage;
-                if (this.properties.isUseRedis()) {
+                /*if (this.properties.isUseRedis()) {
                     final WxMpProperties.RedisConfig redisConfig = this.properties.getRedisConfig();
                     JedisPool jedisPool = new JedisPool(redisConfig.getHost(), redisConfig.getPort());
                     configStorage = new WxMpRedisConfigImpl(new JedisWxRedisOps(jedisPool), a.getAppId());
-                } else {
+                } else {*/
                     configStorage = new WxMpDefaultConfigImpl();
-                }
+//                }
 
                 configStorage.setAppId(a.getAppId());
                 configStorage.setSecret(a.getSecret());
