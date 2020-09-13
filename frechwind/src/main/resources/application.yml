@@ -70,3 +70,22 @@ haolue:
   hbm2ddl: true
   daoUseRedis: false
 
+wx:
+  mp:
+    configs:
+      - appId: wx0a37ddc7d4037d3e # 第一个公众号的appid
+        secret: 17052b2409f994dd374240e9e6980b8d # 公众号的appsecret
+        token: 111 # 接口配置里的Token值
+        aesKey: 111 # 接口配置里的EncodingAESKey值
+      - appId: 2222 # 第二个公众号的appid，以下同上
+        secret: 1111
+        token: 111
+        aesKey: 111
+  miniapp:
+    configs:
+      - appid: #微信小程序的appid
+        secret: #微信小程序的Secret
+        token: #微信小程序消息服务器配置的token
+        aesKey: #微信小程序消息服务器配置的EncodingAESKey
+        msgDataFormat: JSON
+
