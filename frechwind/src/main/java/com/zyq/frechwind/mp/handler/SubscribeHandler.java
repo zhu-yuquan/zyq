@@ -2,7 +2,7 @@ package com.zyq.frechwind.mp.handler;
 
 import java.util.Map;
 
-import com.haolue.wx.mp.builder.TextBuilder;
+import com.zyq.frechwind.mp.builder.TextBuilder;
 import org.springframework.stereotype.Component;
 
 import me.chanjar.weixin.common.error.WxErrorException;

@@ -1,6 +1,6 @@
 package com.zyq.frechwind.mp.handler;
 
-import com.haolue.wx.mp.builder.TextBuilder;
+import com.zyq.frechwind.mp.builder.TextBuilder;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
