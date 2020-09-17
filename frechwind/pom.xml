@@ -228,15 +228,8 @@
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>weixin-java-mp</artifactId>
-            <version>3.9.0</version>
+            <version>3.8.0</version>
         </dependency>
-        <!--小程序-->
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-miniapp</artifactId>
-            <version>3.9.0</version>
-        </dependency>
-
 
     </dependencies>
 

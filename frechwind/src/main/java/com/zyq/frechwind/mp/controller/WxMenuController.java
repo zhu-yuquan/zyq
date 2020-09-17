@@ -15,6 +15,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import static me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 
@@ -42,6 +44,80 @@ public class WxMenuController {
         return this.wxService.switchoverTo(appid).getMenuService().menuCreate(menu);
     }
 
+
+    @GetMapping("/create-mmjd")
+    public String menuCreateMmjd(@PathVariable String appid) throws WxErrorException, MalformedURLException {
+
+        WxMenu menu = new WxMenu();
+        WxMenuButton button1 = new WxMenuButton();
+        button1.setType(MenuButtonType.MINIPROGRAM);
+        button1.setName("我要订餐");
+        //button1.setPagePath("");
+        button1.setAppId("wx2d80346428430886");
+
+        List<WxMenuButton> buttonList = new ArrayList<>();
+        buttonList.add(button1);
+        menu.setButtons(buttonList);
+
+        this.wxService.switchover(appid);
+        return this.wxService.getMenuService().menuCreate(menu);
+    }
+
+    @GetMapping("/create-fengyatongxiang")
+    public String menuCreateFytx(@PathVariable String appid) throws WxErrorException, MalformedURLException {
+
+        WxMenu menu = new WxMenu();
+        WxMenuButton button1 = new WxMenuButton();
+        button1.setType(MenuButtonType.VIEW);
+        button1.setName("文化寻宝");
+        button1.setUrl("http://wechat.tx.hoolue.com/");
+
+        WxMenuButton button2 = new WxMenuButton();
+        button2.setName("文化有约");//一级
+
+        WxMenuButton button21 = new WxMenuButton();
+        button21.setType(MenuButtonType.VIEW);
+        button21.setName("往期精彩");
+        button21.setUrl("https://mp.weixin.qq.com/mp/homepage?__biz=MzU3NjU0Njk4Nw==&hid=6&sn=d752807f88c454804960c002e1173c6a&scene=1&devicetype=android-26&version=2700043c&lang=zh_CN&nettype=cmnet&ascene=7&session_us=gh_090727b8b90f");
+        WxMenuButton button22 = new WxMenuButton();
+        button22.setType(MenuButtonType.VIEW);
+        button22.setName("城市记忆");
+        button22.setUrl("https://mp.weixin.qq.com/mp/homepage?__biz=MzU3NjU0Njk4Nw==&hid=2&sn=1e76ee31c38f68ecbb7aa5c5ab19077f&scene=1&devicetype=android-26&version=2700043c&lang=zh_CN&nettype=cmnet&ascene=7&session_us=gh_090727b8b90f");
+        WxMenuButton button23 = new WxMenuButton();
+        button23.setType(MenuButtonType.VIEW);
+        button23.setName("文博场馆");
+        button23.setUrl("https://mp.weixin.qq.com/mp/homepage?__biz=MzU3NjU0Njk4Nw==&hid=1&sn=a12fc8ba7c7e7da1e1541f62c91aaeee&scene=1&devicetype=android-26&version=2700043c&lang=zh_CN&nettype=cmnet&ascene=7&session_us=gh_090727b8b90f");
+        WxMenuButton button24 = new WxMenuButton();
+        button24.setType(MenuButtonType.VIEW);
+        button24.setName("名人名家");
+        button24.setUrl("https://mp.weixin.qq.com/mp/homepage?__biz=MzU3NjU0Njk4Nw==&hid=3&sn=5f804475d23fe52e73aeb9482ea9c1d4&scene=1&devicetype=android-26&version=2700043c&lang=zh_CN&nettype=cmnet&ascene=7&session_us=gh_090727b8b90f");
+        WxMenuButton button25 = new WxMenuButton();
+        button25.setType(MenuButtonType.VIEW);
+        button25.setName("自爱桐乡");
+        button25.setUrl("https://mp.weixin.qq.com/mp/homepage?__biz=MzU3NjU0Njk4Nw==&hid=4&sn=2ba9b4fe278989548baf57a9500ff0e4&scene=1&devicetype=android-26&version=2700043c&lang=zh_CN&nettype=cmnet&ascene=7&session_us=gh_090727b8b90f");
+
+        button2.getSubButtons().add(button21);
+        button2.getSubButtons().add(button22);
+        button2.getSubButtons().add(button23);
+        button2.getSubButtons().add(button24);
+        button2.getSubButtons().add(button25);
+
+
+        WxMenuButton button3 = new WxMenuButton();
+        button3.setType(MenuButtonType.VIEW);
+        button3.setName("全域旅游");
+        button3.setUrl("http://yxy.100dp.com/mobile/user/newHome");
+
+
+        menu.getButtons().add(button1);
+        menu.getButtons().add(button2);
+        menu.getButtons().add(button3);
+
+        this.wxService.switchover(appid);
+        return this.wxService.getMenuService().menuCreate(menu);
+    }
+
+
     @GetMapping("/create")
     public String menuCreateSample(@PathVariable String appid) throws WxErrorException, MalformedURLException {
         WxMenu menu = new WxMenu();
@@ -50,18 +126,18 @@ public class WxMenuController {
         button1.setName("今日歌曲");
         button1.setKey("V1001_TODAY_MUSIC");
 
-//        WxMenuButton button2 = new WxMenuButton();
-//        button2.setType(WxConsts.BUTTON_MINIPROGRAM);
-//        button2.setName("小程序");
-//        button2.setAppId("wx286b93c14bbf93aa");
-//        button2.setPagePath("pages/lunar/index.html");
-//        button2.setUrl("http://mp.weixin.qq.com");
+        WxMenuButton button2 = new WxMenuButton();
+        button2.setType(MenuButtonType.MINIPROGRAM);
+        button2.setName("小程序");
+        button2.setAppId("wx286b93c14bbf93aa");
+        button2.setPagePath("pages/lunar/index.html");
+        button2.setUrl("http://mp.weixin.qq.com");
 
         WxMenuButton button3 = new WxMenuButton();
         button3.setName("菜单");
 
         menu.getButtons().add(button1);
-//        menu.getButtons().add(button2);
+        menu.getButtons().add(button2);
         menu.getButtons().add(button3);
 
         WxMenuButton button31 = new WxMenuButton();
@@ -88,7 +164,7 @@ public class WxMenuController {
         if (servletRequestAttributes != null) {
             HttpServletRequest request = servletRequestAttributes.getRequest();
             URL requestURL = new URL(request.getRequestURL().toString());
-            String url = this.wxService.switchoverTo(appid).getOAuth2Service().buildAuthorizationUrl(
+            String url = this.wxService.switchoverTo(appid).oauth2buildAuthorizationUrl(
                 String.format("%s://%s/wx/redirect/%s/greet", requestURL.getProtocol(), requestURL.getHost(), appid),
                 WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
             button34.setUrl(url);
