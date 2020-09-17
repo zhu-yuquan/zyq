@@ -26,8 +26,8 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("/wx/portal/{appid}")
-public class WxPortalController {
+@RequestMapping("/wxmp/portal/{appid}")
+public class WxMpPortalController {
     private final WxMpService wxService;
     private final WxMpMessageRouter messageRouter;
 

@@ -1,7 +1,7 @@
 package com.zyq.frechwind.mp.handler;
 
-import com.github.binarywang.demo.wx.mp.builder.TextBuilder;
-import com.github.binarywang.demo.wx.mp.utils.JsonUtils;
+import com.zyq.frechwind.mp.builder.TextBuilder;
+import com.zyq.frechwind.mp.utils.JsonUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;

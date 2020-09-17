@@ -1,12 +1,14 @@
 package com.zyq.frechwind.bean;
 
 import com.zyq.frechwind.base.TimeStamp;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="cms_user")
+@Data
 public class User extends TimeStamp {
 
     @Id
@@ -15,66 +17,36 @@ public class User extends TimeStamp {
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String userId;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", length = 20)
     private String userName;
 
-    @Column(name = "account")
+    @Column(name = "account", length = 20)
     private String account;
 
-    @Column(name = "pass_word")
+    @Column(name = "pass_word", length = 32)
     private String passWord;
 
-    @Column(name = "email")
+    @Column(name = "openid", length = 32)
+    private String openId;
+
+    @Column(name = "nick_name", length = 32)
+    private String nickName;
+
+    @Column(name = "head_img_url", length = 200)
+    private String headImgUrl;
+
+    private String sexDesc;
+    private Integer sex;
+    private String language;
+    private String city;
+    private String province;
+    private String country;
+
+    @Column(name = "email", length = 50)
     private String email;
 
-    @Column(name = "del_flag")
+    @Column(name = "del_flag", length = 2)
     private String delFlag;
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
-    }
 }

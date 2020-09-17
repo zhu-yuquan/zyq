@@ -1,4 +1,4 @@
-package com.zyq.frechwind.service;
+package com.zyq.frechwind.user.service;
 
 import com.zyq.frechwind.base.Finder;
 import com.zyq.frechwind.bean.User;
@@ -34,6 +34,18 @@ public class UserService {
         return user;
     }
 
+    public User wechatCreate(String openId, String nickName, String headImgUrl){
+        User user = userOpenId(openId);
+        if (user == null){
+            user.setOpenId(openId);
+            user.setDelFlag("N");
+            user.setNickName(nickName);
+            user.setHeadImgUrl(headImgUrl);
+            user = userDao.create(user);
+        }
+        return user;
+    }
+
     /**
      * 账号检测
      * @param account
@@ -42,6 +54,17 @@ public class UserService {
     public User userAccount(String account){
         String hql = "from User where account=? and delFlag=?";
         User user = userDao.getUnique(hql,account,"N");
+        return user;
+    }
+
+    /**
+     * 账号检测
+     * @param openId
+     * @return
+     */
+    public User userOpenId(String openId){
+        String hql = "from User where openid=? and delFlag=?";
+        User user = userDao.getUnique(hql,openId,"N");
         return user;
     }
 

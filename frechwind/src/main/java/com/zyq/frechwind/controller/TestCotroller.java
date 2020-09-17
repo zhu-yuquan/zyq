@@ -3,7 +3,7 @@ package com.zyq.frechwind.controller;
 import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.bean.Blog;
 import com.zyq.frechwind.bean.User;
-import com.zyq.frechwind.service.BlogService;
+import com.zyq.frechwind.blog.service.BlogService;
 import com.zyq.frechwind.service.TestService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

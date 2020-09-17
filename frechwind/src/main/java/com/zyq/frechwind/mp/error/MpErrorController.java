@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Controller
-@RequestMapping("/error")
-public class ErrorController {
+@RequestMapping("/mperror")
+public class MpErrorController {
 
   @GetMapping(value = "/404")
   public String error404() {

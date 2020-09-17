@@ -1,8 +1,8 @@
-package com.zyq.frechwind.controller;
+package com.zyq.frechwind.blog.controller;
 
 import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.bean.Blog;
-import com.zyq.frechwind.service.BlogService;
+import com.zyq.frechwind.blog.service.BlogService;
 import com.zyq.frechwind.util.SiteImgUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

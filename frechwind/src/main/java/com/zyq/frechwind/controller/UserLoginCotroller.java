@@ -1,10 +1,8 @@
 package com.zyq.frechwind.controller;
 
 import com.zyq.frechwind.base.SwaggerDoc;
-import com.zyq.frechwind.bean.Blog;
 import com.zyq.frechwind.bean.User;
-import com.zyq.frechwind.service.BlogService;
-import com.zyq.frechwind.service.UserService;
+import com.zyq.frechwind.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @Api(value = "/user", description = "用户登录")

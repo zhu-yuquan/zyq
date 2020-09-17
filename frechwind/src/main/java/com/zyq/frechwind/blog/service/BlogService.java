@@ -1,4 +1,4 @@
-package com.zyq.frechwind.service;
+package com.zyq.frechwind.blog.service;
 
 import com.zyq.frechwind.base.Finder;
 import com.zyq.frechwind.bean.Blog;
