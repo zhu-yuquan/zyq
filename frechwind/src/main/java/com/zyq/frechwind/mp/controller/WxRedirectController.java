@@ -37,7 +37,7 @@ public class WxRedirectController {
         log.info("url-----redirect----=" + url);
         url = this.wxService.switchoverTo(appid).oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
         log.info("authUrl---------=" + url);
-        return url;
+        return "redirect:" + url;
     }
 
     @GetMapping("/bind-wechat-user")
@@ -59,12 +59,10 @@ public class WxRedirectController {
 
             if (u == null) {
                 log.info("wechatOpenId----2-----=" + wechatOpenId);
-                String url = "http://39.97.213.25:8080/wx/redirect/"+appid+"//bind-wechat-user";
+                String url = "http://frechwind.yuquancoco.cn:8080/wx/redirect/"+appid+"/bind-wechat-user";
                 return "redirect:/wx/redirect/"+appid+"/authUrl?url=" + url;
             } else {
                 //自动登录，获取restSessionCode
-
-
                 return "redirect:/blog/blog-list?userId=" + u.getUserId();
             }
         } catch (WxErrorException e) {
