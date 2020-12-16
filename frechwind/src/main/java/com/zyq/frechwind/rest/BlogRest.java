@@ -14,10 +14,10 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@Api(value = "/rest-blog", description = "用户信息")
+@Api(value = "/rest-blog", description = "博客")
 @RequestMapping("/rest-blog")
 @SwaggerDoc
-public class TestControllerRest {
+public class BlogRest {
     @Autowired
     private BlogService blogService;
 

@@ -32,16 +32,16 @@ public class WxRedirectController {
     private UserService userService;
 
     @GetMapping("/authUrl")
-    public String authUrl(@PathVariable String appid, @RequestParam String url) {
+    public String authUrl(@PathVariable String appid) {
         log.info("appid----=" + appid);
-        log.info("url-----redirect----=" + url);
+        String url = "http://frechwind.yuquancoco.cn/wx/redirect/wxd15446797c791b6b/bind-wechat-user";
         url = this.wxService.switchoverTo(appid).oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
         log.info("authUrl---------=" + url);
         return "redirect:" + url;
     }
 
     @GetMapping("/bind-wechat-user")
-    public String bindWechatUser(@PathVariable String appid, @RequestParam String code, HttpServletResponse response) {
+    public String bindWechatUser(@PathVariable String appid, @RequestParam String code) {
         log.info("appid----=" + appid);
         if (!this.wxService.switchover(appid)) {
             throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
@@ -59,8 +59,8 @@ public class WxRedirectController {
 
             if (u == null) {
                 log.info("wechatOpenId----2-----=" + wechatOpenId);
-                String url = "http://frechwind.yuquancoco.cn:8080/wx/redirect/"+appid+"/bind-wechat-user";
-                return "redirect:/wx/redirect/"+appid+"/authUrl?url=" + url;
+                String url = "http://frechwind.yuquancoco.cn/wx/redirect/"+appid+"/bind-wechat-user";
+                return "redirect:/wx/redirect/"+appid+"/authUrl";
             } else {
                 //自动登录，获取restSessionCode
                 return "redirect:/blog/blog-list?userId=" + u.getUserId();

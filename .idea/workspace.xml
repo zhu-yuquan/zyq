@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ad125e9-0bfb-4def-987b-8a0a90a9febf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/login/controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/login/rest/LoginRest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frechwind/src/main/resources/static/layui/admin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frechwind/src/main/resources/static/layui/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frechwind/src/main/resources/static/user/reg.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frechwind/src/main/resources/templates/login/reg.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/base/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/base/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/controller/UserLoginCotroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/controller/UserLoginCotroller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/mp/controller/WxRedirectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/mp/controller/WxRedirectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/frechwind/src/main/java/com/zyq/frechwind/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frechwind/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/frechwind/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frechwind/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/frechwind/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frechwind/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frechwind/src/main/resources/static/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,10 +65,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="y" value="-7" />
-    <option name="width" value="1293" />
-    <option name="height" value="702" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1294" />
+    <option name="height" value="703" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -64,7 +76,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -152,6 +163,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -218,6 +230,7 @@
       <workItem from="1599915728328" duration="2574000" />
       <workItem from="1599990857016" duration="1033000" />
       <workItem from="1600003191131" duration="795000" />
+      <workItem from="1607762152772" duration="7000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1584978393830</created>
@@ -412,13 +425,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30429000" />
+    <option name="totallyTimeSpent" value="30436000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27949062" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28351206" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="JRebel" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />

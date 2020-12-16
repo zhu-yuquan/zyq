@@ -29,6 +29,7 @@ public class UserService {
             user.setDelFlag("N");
             user.setUserName(userName);
             user.setPassWord(password);
+            user.setEmail(email);
             user = userDao.create(user);
         }
         return user;

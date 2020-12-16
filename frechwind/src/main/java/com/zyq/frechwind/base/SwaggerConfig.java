@@ -31,7 +31,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("EC接口")
                 .description("zyq软件出品")
-                .termsOfServiceUrl("http://www.zyq.com/")
+                .termsOfServiceUrl("http://www.yuquancoco.cn")
                 .contact("zyq软件")
                 .version("0.0.1")
                 .build();

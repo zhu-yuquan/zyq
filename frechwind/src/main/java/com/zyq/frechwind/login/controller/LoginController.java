@@ -1,4 +1,5 @@
-package com.zyq.frechwind.controller;
+package com.zyq.frechwind.login.controller;
+
 
 import com.zyq.frechwind.base.SwaggerDoc;
 import com.zyq.frechwind.bean.User;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@Api(value = "/user", description = "用户登录")
-@RequestMapping(value = "/user")
-@SwaggerDoc
-public class UserLoginCotroller {
+import javax.servlet.http.HttpServletRequest;
 
+@Controller
+@Api(value = "/login", description = "用户登录")
+@RequestMapping(value = "/login")
+@SwaggerDoc
+public class LoginController {
     @Autowired
     private UserService userService;
 
@@ -29,8 +31,8 @@ public class UserLoginCotroller {
      * @return
      */
     @ApiOperation(value = "用户登录", notes = "用户登录成功，得到token")
-    @GetMapping("/login")
-    public String login(String userName,String passWord,Model model){
+    @PostMapping("/login")
+    public String login(String userName, String passWord, Model model, HttpServletRequest request){
 
         User user = userService.userAccount(userName);
         if (user == null){
@@ -67,5 +69,4 @@ public class UserLoginCotroller {
         model.addAttribute("user", user);
         return "redirect:/blog/blog-list?userId=" + user.getUserId();
     }
-
 }

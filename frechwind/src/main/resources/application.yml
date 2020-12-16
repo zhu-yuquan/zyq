@@ -73,8 +73,8 @@ haolue:
 wx:
   mp:
     configs:
-      - appid: wx0a37ddc7d4037d3e # 第一个公众号的appid
-        secret: 17052b2409f994dd374240e9e6980b8d # 公众号的appsecret
+      - appid: wxd15446797c791b6b # 第一个公众号的appid
+        secret: 62eabe34bf5584d8a105920bf64557d2 # 公众号的appsecret
         token: 111 # 接口配置里的Token值
         aesKey: 111 # 接口配置里的EncodingAESKey值
 
