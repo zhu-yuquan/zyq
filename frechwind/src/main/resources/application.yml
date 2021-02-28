@@ -41,9 +41,9 @@ spring:
     suffix: .ftl
   mail:
     host: smtp.163.com
-    username: leargateway
-    password: lear1234
-    from: leargateway@163.com
+    username: zhu_yuquan6
+    password: YLCRKXFODXVADHBB
+    from: zhu_yuquan6@163.com
     default-encoding: UTF-8
 
 logging:
