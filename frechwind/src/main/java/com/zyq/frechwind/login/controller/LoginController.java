@@ -6,6 +6,7 @@ import com.zyq.frechwind.bean.User;
 import com.zyq.frechwind.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @Api(value = "/login", description = "用户登录")
@@ -49,16 +51,46 @@ public class LoginController {
     }
 
     /**
-     *
-     * @param userName
-     * @param passWord
+     * 加载注册页面
      * @param email
      * @param model
      * @return
      */
     @ApiOperation(value = "用户注册", notes = "用户注册")
+    @GetMapping("/loadreg")
+    public String loadReg(String email, Model model){
+        model.addAttribute("email", email);
+        return "/login/reg";
+    }
+
+    /**
+     *
+     * @param userName 昵称
+     * @param passWord 密码
+     * @param repass 确认密码
+     * @param verCode 验证码
+     * @param email 邮箱
+     * @param model
+     * @return
+     */
+    @ApiOperation(value = "用户注册", notes = "用户注册")
     @PostMapping("/register")
-    public String register(String userName, String passWord, String email, Model model){
+    public String register(String userName, String passWord, String repass, String email, String verCode, Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        String validCode = (String) session.getAttribute("verCode");
+        if(StringUtils.isBlank(verCode)){
+            model.addAttribute("message", "请输入验证码");
+            return "/login/reg";
+        }
+        if (!verCode.equals(validCode)){
+            model.addAttribute("message", "验证码错误");
+            return "/login/reg";
+        }
+        if(!passWord.equals(repass)){
+            model.addAttribute("message", "确认密码错误");
+            return "/login/reg";
+        }
 
         User user = userService.create(userName,passWord,email);
 

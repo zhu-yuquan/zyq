@@ -65,7 +65,9 @@
             </div>
             <div style="width: 100%;">
                 <div style="float: left;width: 50%;">
-                    <button type="reset" >重置</button>
+                    <a href="/login/loadreg">
+                        <button type="button" >注册</button>
+                    </a>
                 </div>
                 <div style="float: left;width: 50%;">
                     <button type="submit" >登录</button>

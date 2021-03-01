@@ -25,6 +25,7 @@ public class UserService {
     public User create(String userName, String password, String email){
         User user = userAccount(userName);
         if (user == null){
+            user = new User();
             user.setAccount(userName);
             user.setDelFlag("N");
             user.setUserName(userName);

@@ -12,24 +12,25 @@
 </head>
 <body>
 
+<form action="/login/register" method="post">
 
 <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
     <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
             <h2>行者笔记</h2>
             <p>个人领域，绝对隐私，公共区域待开发</p>
-            <p>${message?if_exists}</p>
+            <p style="color: #2F4056;">${message?if_exists}</p>
         </div>
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
             <div class="layui-form-item">
-                <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="LAY-user-login-cellphone"></label>
-                <input type="text" name="cellphone" id="LAY-user-login-cellphone" lay-verify="phone" placeholder="手机" class="layui-input">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-email" for="LAY-user-login-email"></label>
+                <input type="text" name="email" id="LAY-user-login-cellphone" lay-verify="email" placeholder="邮箱" class="layui-input">
             </div>
             <div class="layui-form-item">
                 <div class="layui-row">
                     <div class="layui-col-xs7">
                         <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                        <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="验证码" class="layui-input">
+                        <input type="text" name="verCode" id="LAY-user-login-vercode" lay-verify="required" placeholder="验证码" class="layui-input">
                     </div>
                     <div class="layui-col-xs5">
                         <div style="margin-left: 10px;">
@@ -40,7 +41,7 @@
             </div>
             <div class="layui-form-item">
                 <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
-                <input type="password" name="password" id="LAY-user-login-password" lay-verify="pass" placeholder="密码" class="layui-input">
+                <input type="password" name="passWord" id="LAY-user-login-password" lay-verify="pass" placeholder="密码" class="layui-input">
             </div>
             <div class="layui-form-item">
                 <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-repass"></label>
@@ -48,15 +49,15 @@
             </div>
             <div class="layui-form-item">
                 <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-nickname"></label>
-                <input type="text" name="nickname" id="LAY-user-login-nickname" lay-verify="nickname" placeholder="昵称" class="layui-input">
+                <input type="text" name="userName" id="LAY-user-login-nickname" lay-verify="nickname" placeholder="昵称" class="layui-input">
             </div>
             <div class="layui-form-item">
                 <input type="checkbox" name="agreement" lay-skin="primary" title="同意用户协议" checked>
             </div>
             <div class="layui-form-item">
-                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-reg-submit">注 册</button>
+                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-reg-submit" type="submit">注 册</button>
             </div>
-            <div class="layui-trans layui-form-item layadmin-user-login-other">
+            <#--<div class="layui-trans layui-form-item layadmin-user-login-other">
                 <label>社交账号注册</label>
                 <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
@@ -64,7 +65,7 @@
 
                 <a href="login.html" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
                 <a href="login.html" class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">登入</a>
-            </div>
+            </div>-->
         </div>
     </div>
 
@@ -82,53 +83,21 @@
 
 </div>
 
-<script src="../../layuiadmin/layui/layui.js"></script>
-<script>
-    layui.config({
-        base: '../../layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'user'], function(){
-        var $ = layui.$
-            ,setter = layui.setter
-            ,admin = layui.admin
-            ,form = layui.form
-            ,router = layui.router();
-
-        form.render();
-
-        //提交
-        form.on('submit(LAY-user-reg-submit)', function(obj){
-            var field = obj.field;
-
-            //确认密码
-            if(field.password !== field.repass){
-                return layer.msg('两次密码输入不一致');
-            }
-
-            //是否同意用户协议
-            if(!field.agreement){
-                return layer.msg('你必须同意用户协议才能注册');
-            }
-
-            //请求接口
-            admin.req({
-                url: layui.setter.base + 'json/user/reg.js' //实际使用请改成服务端真实接口
-                ,data: field
-                ,done: function(res){
-                    layer.msg('注册成功', {
-                        offset: '15px'
-                        ,icon: 1
-                        ,time: 1000
-                    }, function(){
-                        location.hash = '/user/login'; //跳转到登入页
-                    });
-                }
-            });
-
-            return false;
-        });
-    });
+</form>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/pub.js"></script>
+<script src="../layui/layui.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#LAY-user-getsmscode").click(function () {
+            var email = $("input[name='email']").val();
+            // console.log("email=" + email)
+            app.pubAjaxGet("/rest-user/send-email",{email: email}, function (res) {
+                console.log("res=" + res)
+            })
+        })
+    })
 </script>
 </body>
 </html>
