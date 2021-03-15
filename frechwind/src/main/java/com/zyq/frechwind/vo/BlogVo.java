@@ -58,6 +58,7 @@ public class BlogVo {
     @Enumerated(EnumType.STRING)
     private Auditable.AuditFlag auditFlag;
 
+
     private String delFlag;
 
     @Transient
