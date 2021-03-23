@@ -30,7 +30,7 @@ public class TestCotroller {
 
         Map map = new LinkedHashMap<>();
         for (int i = 0; i < 5; i++) {
-            map.put("key" + i, "value" + i);
+            map.put("key=" + i, "value=" + i);
         }
         model.addAttribute("list", Arrays.asList("string1", "string2", "string3", "string4", "string5", "string6"));
         model.addAttribute("map", map);
