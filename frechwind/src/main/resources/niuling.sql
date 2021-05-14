@@ -12,9 +12,9 @@
 -- 表名前缀：ass -- 助手assistant；
 -- 表名前缀：ins -- 保险公司insurer；
 -- 表名前缀：jhs -- 计划书；
--- 表名前缀：ptn -- 会员partner；
--- 表名前缀：per -- 人员person；
+-- 表名前缀：ptn -- 业务员partner；
 -- 表名前缀：ord -- 订单order；
+-- 表名前缀：pmt -- 展业promote
 
 CREATE TABLE `ins_base_info`
 (
@@ -232,7 +232,7 @@ CREATE TABLE `pro_duty`
   `duty_code`      varchar(32)  DEFAULT NULL COMMENT '保司责任代码',
   `plat_duty_code` varchar(32) NOT NULL COMMENT '公司平台的责任编码',
   `duty_name`      varchar(64) NOT NULL COMMENT '责任名称',
-  `promise_type`   int         NOT NULL COMMENT '保障类型:101--重疾责任;102--轻症责任;103--中症责任;104--身故责任;105--疾病终末期责任;106--恶性肿瘤责任;107--健康服务责任;108--保费豁免责任;109--特殊重疾责任;201--身故责任;301--意外责任;302--猝死/急性病身故责任;303--意外医疗责任;304--意外住院津贴;401--一般医疗责任;402--特定医疗责任;403--住院津贴责任;404--门急诊医疗责任;405--特殊医疗责任;406--健康服务责任;501--年金领取责任;',
+  `promise_type`   int         NOT NULL COMMENT '保障类型:0--其他责任；1--重疾责任；2--轻症责任；3--中症责任；4--身故或全残责任；5--疾病终末期责任；6--恶性肿瘤责任；7--健康服务责任；8--保费豁免责任；9--特殊重疾责任；10--意外责任；11--猝死或急性病身故责任；12--意外医疗责任；13--意外住院津贴；14--一般医疗责任；15--特定医疗责任；16--住院津贴责任；17--门急诊医疗责任；18--特殊医疗责任；19--年金领取责任；',
   `remark`         varchar(256) DEFAULT NULL COMMENT '备注',
   `create_time`    datetime     DEFAULT current_timestamp COMMENT '创建时间',
   `update_time`    datetime     DEFAULT current_timestamp COMMENT '更新时间',
@@ -254,12 +254,12 @@ CREATE TABLE `pro_duty_detail`
 (
   `id`          int     NOT NULL AUTO_INCREMENT,
   `duty_id`     int(11) NOT NULL COMMENT '险别责任ID',
-  `name`        varchar(64)  DEFAULT NULL COMMENT '名称',
-  `description` varchar(256) DEFAULT NULL COMMENT '内容描述',
-  `expression`  varchar(64)  DEFAULT NULL COMMENT '计算表达式',
-  `remark`      varchar(256) DEFAULT NULL COMMENT '备注',
-  `create_time` datetime     DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime     DEFAULT NULL COMMENT '更新时间',
+  `name`        varchar(64)   DEFAULT NULL COMMENT '名称',
+  `description` varchar(256)  DEFAULT NULL COMMENT '内容描述',
+  `expression`  varchar(1024) DEFAULT NULL COMMENT '计算规则json表达式',
+  `remark`      varchar(256)  DEFAULT NULL COMMENT '备注',
+  `create_time` datetime      DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime      DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ROW_FORMAT = DYNAMIC COMMENT ='险别责任子项表';
 
@@ -357,14 +357,15 @@ CREATE TABLE `chl_agreement`
 (
   `id`               int(11)     NOT NULL AUTO_INCREMENT,
   `agreement_no`     varchar(64) NOT NULL COMMENT '协议编号',
+  `old_agreement_no` varchar(64) NULL COMMENT '续签时的上个协议编号',
   `channel_no`       varchar(64) NOT NULL COMMENT '渠道编号',
   `full_name`        varchar(64) NOT NULL COMMENT '渠道全名称',
-  `contract_date`    datetime    NOT NULL COMMENT '签约日期',
-  `start_date`       datetime    NOT NULL COMMENT '生效日期',
-  `end_date`         datetime    NOT NULL COMMENT '结束日期',
-  `vat`              varchar(64) NOT NULL COMMENT '增值税：6%、3%、1%、无票、普票',
+  `contract_date`    datetime    NULL COMMENT '签约日期',
+  `start_date`       datetime    NULL COMMENT '生效日期',
+  `end_date`         datetime    NULL COMMENT '结束日期',
+  `vat`              varchar(64) NULL COMMENT '增值税：6%、3%、1%、无票、普票',
   `agreement_status` tinyint(2)   DEFAULT 0 COMMENT '合同状态：0 -- 有效；1 -- 即将到期；2 -- 已到期；',
-  `operName`         varchar(8)  NOT NULL COMMENT '操作人',
+  `operName`         varchar(8)  NULL COMMENT '操作人',
   `remark`           varchar(512) DEFAULT NULL COMMENT '合同备注',
   `create_time`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -374,6 +375,7 @@ CREATE TABLE `chl_agreement`
 CREATE TABLE `file_info`
 (
   `id`           int(11) NOT NULL AUTO_INCREMENT,
+  `md5`          varchar(64) COMMENT '文件内容md5',
   `contentType`  varchar(128) COMMENT '内容类型',
   `display_name` varchar(256) COMMENT '文件展示名称',
   `file_size`    int COMMENT '文件字节大小',
@@ -392,9 +394,8 @@ CREATE TABLE `rel_chanel_product`
   `product_id`    int(11) NOT NULL COMMENT '产品ID',
   `channel_id`    int(11) NOT NULL COMMENT '渠道ID',
   `passageway_id` int(11) NOT NULL COMMENT '通道ID',
-  `sale_status`   tinyint(2) DEFAULT 0 COMMENT '销售状态：0 -- 可售；1 -- 停售；',
-  `create_time`   datetime   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`   datetime   DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_time`   datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`   datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ROW_FORMAT = DYNAMIC COMMENT ='渠道产品关联表';
 
@@ -409,7 +410,7 @@ CREATE TABLE `psw_base_info`
   `address_code`    varchar(8)   DEFAULT NULL COMMENT '地址编码',
   `address_detail`  varchar(256) DEFAULT NULL COMMENT '详细地址',
   `has_agreement`   tinyint(2)   DEFAULT 1 COMMENT '是否有协议：0 -- 否；1 -- 是；',
-  `contract_status` tinyint(2)   DEFAULT 0 COMMENT '签约状态：0 -- 待签约；1 -- 已签约；',
+  `contract_status` tinyint(2)   DEFAULT 0 COMMENT '签约状态：0 -- 待签约；1 -- 已签约；2 -- 已解约；',
   `remark`          varchar(256) DEFAULT NULL COMMENT '备注',
   `create_time`     datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`     datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -420,13 +421,14 @@ CREATE TABLE `psw_agreement`
 (
   `id`               int(11)     NOT NULL AUTO_INCREMENT,
   `agreement_no`     varchar(64) NOT NULL COMMENT '协议编号',
+  `old_agreement_no` varchar(64) NULL COMMENT '续签时的上个协议编号',
   `passageway_no`    varchar(64) NOT NULL COMMENT '通道编号',
-  `full_name`        varchar(64) NOT NULL COMMENT '协议全名称',
-  `contract_date`    datetime    NOT NULL COMMENT '签约日期',
-  `start_date`       datetime    NOT NULL COMMENT '生效日期',
-  `end_date`         datetime    NOT NULL COMMENT '结束日期',
+  `full_name`        varchar(64) NOT NULL COMMENT '通道全名称',
+  `contract_date`    datetime    NULL COMMENT '签约日期',
+  `start_date`       datetime    NULL COMMENT '生效日期',
+  `end_date`         datetime    NULL COMMENT '结束日期',
   `agreement_status` tinyint(2)   DEFAULT 0 COMMENT '合同状态：0 -- 有效；1 -- 即将到期；2 -- 已到期；',
-  `maintainer`       varchar(8)  NOT NULL COMMENT '维护人',
+  `operName`         varchar(8)  NULL COMMENT '维护人',
   `remark`           varchar(512) DEFAULT NULL COMMENT '合同备注',
   `create_time`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -438,75 +440,95 @@ CREATE TABLE `rel_passageway_product`
   `id`            int(11) NOT NULL AUTO_INCREMENT,
   `product_id`    int(11) NOT NULL COMMENT '产品ID',
   `passageway_id` int(11) NOT NULL COMMENT '通道ID',
-  `supplier_id`   int(11) NOT NULL COMMENT '保司ID',
-  `sale_status`   tinyint(2) DEFAULT 0 COMMENT '销售状态：0 -- 可售；1 -- 停售；',
-  `create_time`   datetime   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`   datetime   DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_time`   datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`   datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ROW_FORMAT = DYNAMIC COMMENT ='通道产品关联表';
 
-CREATE TABLE `per_base_info`
-(
-  `id`                      int(11) NOT NULL AUTO_INCREMENT,
-  `nick_name`               varchar(64)    DEFAULT NULL COMMENT '昵称',
-  `real_name`               varchar(64)    DEFAULT NULL COMMENT '姓名',
-  `gender`                  tinyint(2)     DEFAULT NULL COMMENT '性别：0--男；1--女；2--未知；9--未说明；',
-  `real_auth_status`        tinyint(2)     DEFAULT NULL COMMENT '实名认证状态：0--未认证；1--已认证；',
-  `real_auth_time`          datetime       DEFAULT NULL COMMENT '实名认证时间',
-  `birthday`                datetime       DEFAULT NULL COMMENT '生日',
-  `nationality`             varchar(16)    DEFAULT NULL COMMENT '国籍，代码表',
-  `card_type`               varchar(8)     DEFAULT NULL COMMENT '证件类型：01 -- 身份证；02 -- 户口本；03 -- 驾照；04 -- 军人证（军官证）；05 -- 士兵证；10 -- 台胞证；11 -- 回乡证；12 -- 出生证；99 -- 其它；A -- 护照；B -- 学生证；C -- 工作证；D -- 无证件；E -- 临时身份证；F -- 警官证；',
-  `card_no`                 varchar(64)    DEFAULT NULL COMMENT '证件号码',
-  `valid_date`              datetime       DEFAULT NULL COMMENT '证件有效开始日期',
-  `invalid_date`            datetime       DEFAULT NULL COMMENT '证件有效终止日期',
-  `occupation`              varchar(16)    DEFAULT NULL COMMENT '职业代码',
-  `mobile`                  varchar(16)    DEFAULT NULL COMMENT '手机号码',
-  `email`                   varchar(64)    DEFAULT NULL COMMENT '电子邮箱',
-  `height`                  decimal(6, 2)  DEFAULT NULL COMMENT '身高（单位--厘米）',
-  `weight`                  decimal(6, 2)  DEFAULT NULL COMMENT '体重（单位--千克）',
-  `address_code`            varchar(8)     DEFAULT NULL COMMENT '地址编码',
-  `address_detail`          varchar(256)   DEFAULT NULL COMMENT '详细地址',
-  `education`               varchar(16)    DEFAULT NULL COMMENT '学历',
-  `annual_income`           decimal(14, 2) DEFAULT NULL COMMENT '年收入',
-  `social_insurance_flag`   tinyint(2)     DEFAULT 0 COMMENT '是否有社保：0--有社保；1--无社保；',
-  `appnt_tax_resident_type` varchar(2)     DEFAULT NULL COMMENT 'A：中国税收居民身份B：既是中国税收居民，又是其他税收管辖区居民C：非中国税收居民',
-  `create_time`             datetime       DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`             datetime       DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ROW_FORMAT = DYNAMIC COMMENT ='人员基本信息表';
-
-CREATE TABLE `ptn_base_info`
+CREATE TABLE `ptn_info`
 (
   `id`               int(11)     NOT NULL AUTO_INCREMENT,
-  `parent_id`        int(11)              DEFAULT NULL COMMENT '上级会员',
   `partner_no`       varchar(64) NOT NULL COMMENT '会号编号',
-  `partner_type`     tinyint(3)           DEFAULT '0' COMMENT '会号类型：-1 -- 未定义；0 -- 宁康保会员；',
-  `person_id`        int(11)              DEFAULT NULL COMMENT '人员信息ID',
-  `channel_id`       int(11)     NOT NULL COMMENT '渠道ID',
-  `grade_id`         int(11)     NOT NULL DEFAULT '0' COMMENT '渠道基本法职级表ID',
-  `login_id`         varchar(64)          DEFAULT NULL COMMENT '会员注册ID',
-  `cert_auth_status` tinyint(2)           DEFAULT NULL COMMENT '执业证认证状态：0--未认证；1--已认证；',
-  `cert_auth_time`   datetime             DEFAULT NULL COMMENT '执业证认证时间',
-  `certificate_no`   varchar(50)          DEFAULT NULL COMMENT '执业证号',
-  `cert_company`     varchar(100)         DEFAULT NULL COMMENT '执业证所属单位',
-  `cert_area`        varchar(50)          DEFAULT NULL COMMENT '执业区域',
-  `create_time`      datetime             DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`      datetime             DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `real_name`        varchar(64)  DEFAULT NULL COMMENT '姓名',
+  `nick_name`        varchar(64)  DEFAULT NULL COMMENT '昵称',
+  `gender`           tinyint(2)   DEFAULT NULL COMMENT '性别：0--男；1--女；2--未知；9--未说明；',
+  `card_type`        varchar(8)   DEFAULT NULL COMMENT '证件类型：01 -- 身份证；02 -- 户口本；03 -- 驾照；04 -- 军人证（军官证）；05 -- 士兵证；10 -- 台胞证；11 -- 回乡证；12 -- 出生证；99 -- 其它；A -- 护照；B -- 学生证；C -- 工作证；D -- 无证件；E -- 临时身份证；F -- 警官证；',
+  `card_no`          varchar(64)  DEFAULT NULL COMMENT '证件号码',
+  `valid_date`       datetime     DEFAULT NULL COMMENT '证件有效开始日期',
+  `invalid_date`     datetime     DEFAULT NULL COMMENT '证件有效终止日期',
+  `real_auth_status` tinyint(2)   DEFAULT NULL COMMENT '实名认证状态：0--未认证；1--已认证；',
+  `real_auth_time`   datetime     DEFAULT NULL COMMENT '实名认证时间',
+  `birthday`         datetime     DEFAULT NULL COMMENT '生日',
+  `mobile`           varchar(16)  DEFAULT NULL COMMENT '手机号码',
+  `email`            varchar(64)  DEFAULT NULL COMMENT '电子邮箱',
+  `address_code`     varchar(8)   DEFAULT NULL COMMENT '地址编码',
+  `address_detail`   varchar(256) DEFAULT NULL COMMENT '详细地址',
+  `education`        varchar(16)  DEFAULT NULL COMMENT '学历',
+  `cert_auth_status` tinyint(2)   DEFAULT NULL COMMENT '执业证认证状态：0--未认证；1--已认证；',
+  `cert_auth_time`   datetime     DEFAULT NULL COMMENT '执业证认证时间',
+  `certificate_no`   varchar(50)  DEFAULT NULL COMMENT '执业证号',
+  `cert_company`     varchar(100) DEFAULT NULL COMMENT '执业证所属单位',
+  `cert_area`        varchar(50)  DEFAULT NULL COMMENT '执业区域',
+  `user_name`        varchar(64)  DEFAULT NULL COMMENT '用户名',
+  `password`         varchar(256) DEFAULT NULL COMMENT '哈希密码',
+  `salt`             varchar(16)  DEFAULT '198303' COMMENT '加密盐值',
+  `wechat`           varchar(64)  DEFAULT NULL COMMENT '微信号',
+  `open_id`          varchar(64)  DEFAULT NULL COMMENT '微信OpenID',
+  `alipay`           varchar(64)  DEFAULT NULL COMMENT '支付宝账号',
+  `agent_no`         varchar(64)  DEFAULT NULL COMMENT '银保监会报备代理人工号',
+  `initials`         varchar(2)   DEFAULT NULL COMMENT '姓名首字母',
+  `create_time`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ROW_FORMAT = DYNAMIC COMMENT ='会员基本信息表';
+) ROW_FORMAT = DYNAMIC COMMENT ='业务员信息表';
 
-CREATE TABLE `per_register`
+CREATE TABLE `ptn_platform`
 (
-  `id`          int(11) NOT NULL AUTO_INCREMENT,
-  `person_id`   int(11)      DEFAULT NULL COMMENT '人员信息ID',
-  `nick_name`   varchar(64)  DEFAULT NULL COMMENT '昵称',
-  `user_name`   varchar(64)  DEFAULT NULL COMMENT '用户名',
-  `password`    varchar(256) DEFAULT NULL COMMENT '哈希密码',
-  `salt`        varchar(16)  DEFAULT '198303' COMMENT '加密盐值',
-  `create_time` datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `id`                int(11) NOT NULL AUTO_INCREMENT,
+  `partner_id`        int(11) NOT NULL COMMENT '会员ID',
+  `parent_partner_id` int(11)     DEFAULT NULL COMMENT '上级会员ID',
+  `platform_type`     tinyint(3)  DEFAULT '0' COMMENT '平台类型：-1 -- 未定义；0 -- 宁康保会员；',
+  `platform_name`     varchar(64) DEFAULT NULL COMMENT '平台名称',
+  `channel_id`        int(11) NOT NULL COMMENT '渠道ID',
+  `grade_name`        varchar(64) DEFAULT NULL COMMENT '职级名称，职级代表此人拥有的权益',
+  `post_name`         varchar(64) DEFAULT NULL COMMENT '职务名称，职务代表此人做事的范围',
+  `contract_status`   tinyint(2)  DEFAULT 0 COMMENT '签约状态：0 -- 待签约；1 -- 已签约；2 -- 已离职；',
+  `create_time`       datetime    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`       datetime    DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ROW_FORMAT = DYNAMIC COMMENT ='会员注册表';
+) ROW_FORMAT = DYNAMIC COMMENT ='业务员销售平台表';
+
+CREATE TABLE `act_base_info`
+(
+  `id`               int(11)      NOT NULL AUTO_INCREMENT,
+  `owner_type`       int(4)         DEFAULT 0 COMMENT '账户拥有者类型：0 -- 宁康保会员账户；',
+  `owner_id`         int(11)      NOT NULL COMMENT '账户拥有者ID，依赖owner_type值：owner_type为0 -- 业务员销售平台表ID；',
+  `account_type`     int(4)         DEFAULT 0 COMMENT '账户类型：0 -- 保单结算类账户;',
+  `balance`          decimal(14, 2) DEFAULT '0.00' COMMENT '账户余额（单位--元）',
+  `account_name`     varchar(64)    DEFAULT NULL COMMENT '银行账户名称',
+  `bank_account`     varchar(64)    DEFAULT NULL COMMENT '银行卡号',
+  `bank_name`        varchar(64)    DEFAULT NULL COMMENT '银行名称',
+  `bank_branch_name` varchar(256)   DEFAULT NULL COMMENT '银行开户行支行名称',
+  `remark`           varchar(512) NULL COMMENT '备注',
+  `create_time`      datetime       DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`      datetime       DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='账户基本信息表';
+
+CREATE TABLE `act_detail`
+(
+  `id`          int(11)        NOT NULL AUTO_INCREMENT,
+  `account_id`  int(11)        NOT NULL COMMENT '账户ID',
+  `biz_type`    int(11)        NOT NULL COMMENT '外部业务类型 :{1--佣金:[100--会员出单佣金；]}; ',
+  `biz_id`      varchar(64)    NOT NULL COMMENT '外部业务ID，对应外部业务类型：100--保单号；',
+  `amount`      decimal(14, 2) NOT NULL COMMENT '流水发生额',
+  `direction`   tinyint(2)     NOT NULL COMMENT '进出账户方向：1--进;2--出;',
+  `balance`     decimal(14, 2) NOT NULL COMMENT '交易发生后账户余额',
+  `remark`      varchar(512)   NOT NULL COMMENT '交易事项摘要备注',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='账户明细表';
 
 CREATE TABLE `bal_channel`
 (
@@ -550,37 +572,6 @@ CREATE TABLE `bal_fee_rate`
   PRIMARY KEY (`id`)
 ) ROW_FORMAT = DYNAMIC COMMENT ='渠道基本法费率表';
 
-CREATE TABLE `act_base_info`
-(
-  `id`             int(11) NOT NULL AUTO_INCREMENT,
-  `owner_type`     int(4)         DEFAULT 0 COMMENT '账户拥有者类型：0--会员账户；',
-  `owner_id`       int(11) NOT NULL COMMENT '账户拥有者ID',
-  `account_type`   int(4)         DEFAULT 0 COMMENT '账户类型：0--保单结算类账户;',
-  `balance`        decimal(14, 2) DEFAULT '0.00' COMMENT '账户余额（单位--元）',
-  `account_name`   varchar(64)    DEFAULT NULL COMMENT '银行账户名称',
-  `bank_account`   varchar(64)    DEFAULT NULL COMMENT '银行卡号',
-  `bank_name`      varchar(64)    DEFAULT NULL COMMENT '银行名称',
-  `subbranch_name` varchar(256)   DEFAULT NULL COMMENT '银行开户行支行名称',
-  `create_time`    datetime       DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`    datetime       DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ROW_FORMAT = DYNAMIC COMMENT ='账户基本信息表';
-
-CREATE TABLE `act_detail`
-(
-  `id`          int(11)        NOT NULL AUTO_INCREMENT,
-  `account_id`  int(11)        NOT NULL COMMENT '账户ID，即账号',
-  `biz_type`    int(11)        NOT NULL COMMENT '外部业务类型 :{1--佣金:[100--会员出单佣金；]}; ',
-  `biz_id`      varchar(64)    NOT NULL COMMENT '外部业务ID，对应外部业务类型：100--保单号；',
-  `amount`      decimal(14, 2) NOT NULL COMMENT '流水发生额',
-  `direction`   tinyint(2)     NOT NULL COMMENT '进出账户方向：1--进;2--出;',
-  `balance`     decimal(14, 2) NOT NULL COMMENT '交易发生后账户余额',
-  `remark`      varchar(512)   NOT NULL COMMENT '交易事项摘要备注',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ROW_FORMAT = DYNAMIC COMMENT ='账户明细表';
-
 CREATE TABLE `stl_partner_fee`
 (
   `id`               int(11)     NOT NULL AUTO_INCREMENT,
@@ -623,25 +614,24 @@ CREATE TABLE `rel_partnerfee_policy`
 -- 如果产品没有折标系数，则默认是1.0计算，即不折标使用原保费；短险通常不折标；
 CREATE TABLE `pro_stdprem_factor`
 (
-  `id`             int(11)     NOT NULL AUTO_INCREMENT,
-  `product_id`     int(11)     NOT NULL COMMENT '产品ID',
-  `plat_code`      varchar(32) NOT NULL COMMENT '平台产品代码',
-  `obj_type`       tinyint(4)  NOT NULL DEFAULT 0 COMMENT '折标对象类型：0--未指定；1--上游通道给的折标标准；2--给下游渠道的通用折标标准；3--给下游渠道会员的折标标准；',
-  `obj_id`         int(11)              DEFAULT NULL COMMENT '对象ID，依赖折标对象类型存储：类型0--NULL；类型1--通道ID；类型2--NULL；类型3--渠道ID；',
-  `min_pay_period` int(11)              DEFAULT NULL COMMENT '最小缴费期限（单位--年）',
-  `max_pay_period` int(11)              DEFAULT NULL COMMENT '最大缴费期限（单位--年）',
-  `stdprem_factor` decimal(14, 4)       DEFAULT '1.0000' COMMENT '标保折标系数：100%--1.0；75%--0.75；50%--0.5',
-  `create_time`    datetime             DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`    datetime             DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `id`             int(11)    NOT NULL AUTO_INCREMENT,
+  `product_id`     int(11)    NOT NULL COMMENT '产品ID',
+  `risk_id`        int(11)             DEFAULT NULL COMMENT '险种ID',
+  `obj_type`       tinyint(4) NOT NULL DEFAULT 0 COMMENT '折标对象类型：0--未指定；1--上游通道给的折标标准；2--给下游渠道的通用折标标准；3--给指定下游渠道的折标标准；',
+  `obj_id`         int(11)             DEFAULT NULL COMMENT '对象ID，依赖折标对象类型存储：类型0--NULL；类型1--通道ID；类型2--NULL；类型3--渠道ID；',
+  `min_pay_period` int(11)             DEFAULT NULL COMMENT '最小缴费期限（单位--年）',
+  `max_pay_period` int(11)             DEFAULT NULL COMMENT '最大缴费期限（单位--年）',
+  `stdprem_factor` decimal(14, 4)      DEFAULT '1.0000' COMMENT '标保折标系数：100%--1.0；75%--0.75；50%--0.5',
+  `operName`       varchar(8) NULL COMMENT '维护人',
+  `batch_no`       bigint(63)          DEFAULT NULL COMMENT '批次号，生成规则：年月日时分秒',
+  `remark`         varchar(512)        DEFAULT NULL COMMENT '备注',
+  `create_time`    datetime            DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`    datetime            DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ROW_FORMAT = DYNAMIC COMMENT ='标准保费折标系数表';
 
 -- 兼容通道、渠道的结算模式
--- 如果按产品结算费率，则险种编码为默认值；
--- 如果按险种结算费率，则产品+产品计划为默认值；
 -- 保单的结算费率，使用[保单投保时间]对应于时间区间 -- [生效开始时间,生效截止时间]
--- 长险--险种代码、产品代码（方便于总保费乘以费率，其实产品也可拆分到险种但计算不方便）
--- 短险--计划代码（产品代码、险种代码一致）；
 -- 结算金额=规模保费*基础结算费率
 CREATE TABLE `stl_normal_rule`
 (
@@ -650,7 +640,7 @@ CREATE TABLE `stl_normal_rule`
   `obj_id`             int(11)        DEFAULT NULL COMMENT '对象ID，依赖结算对象类型存储：类型0--通道ID，如果为NULL表示所有通道；类型1--渠道ID，如果为NULL表示所有渠道；',
   `product_id`         int(11)        DEFAULT NULL COMMENT '产品ID',
   `plan_id`            int(11)        DEFAULT NULL COMMENT '产品计划ID',
-  `plat_risk_code`     varchar(32)    DEFAULT NULL COMMENT '公司平台的险种编码',
+  `risk_id`            int(11)        DEFAULT NULL COMMENT '险种ID',
   `valid_date`         datetime                    NOT NULL COMMENT '生效开始时间',
   `invalid_date`       datetime                    NOT NULL COMMENT '生效截止时间',
   `personal_or_family` tinyint(2)     DEFAULT NULL COMMENT '保单是个人单还是家庭单：1--个人；2--家庭；',
@@ -659,7 +649,7 @@ CREATE TABLE `stl_normal_rule`
   `pay_period`         int(4)         DEFAULT NULL COMMENT '缴费期间',
   `pay_period_unit`    varchar(24)    DEFAULT NULL NULL COMMENT '缴费期间单位：M--月；S--季度；HY--半年；Y--年；A--缴至',
   `insure_period`      int(10)        DEFAULT NULL COMMENT '保障期间',
-  `insure_period_unit` varchar(24)    DEFAULT NULL COMMENT '保障期间单位：M--月；S--季度；HY--半年；Y--年；保--缴至',
+  `insure_period_unit` varchar(24)    DEFAULT NULL COMMENT '保障期间单位：M--月；S--季度；HY--半年；Y--年；A--保至',
   `draw_period`        int(10)        DEFAULT NULL COMMENT '领取时长',
   `draw_period_unit`   varchar(24)    DEFAULT NULL COMMENT '领取年限单位：M--月；S--季度；HY--半年；Y--年；A--领取至',
   `draw_start_age`     int(10)        DEFAULT NULL COMMENT '开始领取年龄',
@@ -679,6 +669,7 @@ CREATE TABLE `stl_activity_rule`
   `activity_id`        int(11)        DEFAULT NULL COMMENT '活动表ID',
   `product_id`         int(11)        DEFAULT NULL COMMENT '产品ID',
   `plan_id`            int(11)        DEFAULT NULL COMMENT '产品计划ID',
+  `risk_id`            int(11)        DEFAULT NULL COMMENT '险种ID',
   `personal_or_family` tinyint(2)     DEFAULT NULL COMMENT '保单是个人单还是家庭单：1--个人；2--家庭；',
   `year_no`            int(11)        DEFAULT NULL COMMENT '保单年度',
   `pay_intv`           varchar(24)    DEFAULT NULL COMMENT '缴费频次：0--一次交清；1--月交；3--季交；6--半年交；12--年交',
@@ -759,50 +750,127 @@ CREATE TABLE `stl_policy_fee`
 
 CREATE TABLE `pol_base_info`
 (
-  `id`                   int(11)        NOT NULL AUTO_INCREMENT,
-  `contract_no`          varchar(128)   NOT NULL COMMENT '保单号',
-  `proposal_no`          varchar(128)            DEFAULT NULL COMMENT '投保单号，核保时保险公司生成',
-  `total_prem`           decimal(14, 2) NOT NULL DEFAULT 0.00 COMMENT '总保费（单位--元）',
-  `stdprem_factor`       decimal(14, 4)          DEFAULT '1.0000' COMMENT '标保折标系数：100%--1.0；75%--0.75',
-  `stdprem`              decimal(14, 2)          DEFAULT '0.00' COMMENT '标准保费',
-  `total_amount`         decimal(14, 2)          DEFAULT NULL DEFAULT 0.00 COMMENT '总保额（单位--元）',
-  `insured_date`         datetime       NOT NULL COMMENT '投保日期',
-  `valid_date`           datetime       NOT NULL COMMENT '保单生效日期',
-  `invalid_date`         datetime                DEFAULT NULL COMMENT '保单终止日期',
-  `partner_id`           int(11)        NOT NULL COMMENT '会员基本信息表ID',
-  `channel_id`           int(11)        NOT NULL COMMENT '渠道ID',
-  `passageway_id`        int(11)        NOT NULL COMMENT '通道ID',
-  `product_id`           int(11)        NOT NULL COMMENT '产品ID',
-  `plan_id`              int(11)                 DEFAULT NULL COMMENT '产品计划ID',
-  `period_flag`          tinyint(2)              DEFAULT NULL COMMENT '长短险标识：0--长险；1--短险；',
-  `copies`               int(5)         NOT NULL DEFAULT 1 COMMENT '购买份数',
-  `main_flag`            tinyint(5)     NOT NULL DEFAULT 1 COMMENT '保单主次标识：1 -- 主保单；2 -- 次保单；',
+  `id`                 int(11)        NOT NULL AUTO_INCREMENT,
+  `order_id`           int(11)        NOT NULL COMMENT '订单ID',
+  `contract_no`        varchar(128)   NOT NULL COMMENT '保单号',
+  `proposal_no`        varchar(128)            DEFAULT NULL COMMENT '投保单号，核保时保险公司生成',
+  `total_prem`         decimal(14, 2) NOT NULL DEFAULT 0.00 COMMENT '总保费（单位--元）',
+  `stdprem_factor`     decimal(14, 4)          DEFAULT '1.0000' COMMENT '标保折标系数：100%--1.0；75%--0.75',
+  `stdprem`            decimal(14, 2)          DEFAULT '0.00' COMMENT '标准保费',
+  `total_amount`       decimal(14, 2)          DEFAULT NULL DEFAULT 0.00 COMMENT '总保额（单位--元）',
+  `insured_date`       datetime       NOT NULL COMMENT '投保日期',
+  `valid_date`         datetime       NOT NULL COMMENT '保单生效日期',
+  `invalid_date`       datetime                DEFAULT NULL COMMENT '保单终止日期',
+  `partner_id`         int(11)        NOT NULL COMMENT '会员基本信息表ID',
+  `channel_id`         int(11)        NOT NULL COMMENT '渠道ID',
+  `passageway_id`      int(11)        NOT NULL COMMENT '通道ID',
+  `product_id`         int(11)        NOT NULL COMMENT '产品ID',
+  `plan_id`            int(11)                 DEFAULT NULL COMMENT '产品计划ID',
+  `period_flag`        tinyint(2)              DEFAULT NULL COMMENT '长短险标识：0--长险；1--短险；',
+  `copies`             int(5)         NOT NULL DEFAULT 1 COMMENT '购买份数',
+  `main_flag`          tinyint(5)     NOT NULL DEFAULT 1 COMMENT '保单主次标识：1 -- 主保单；2 -- 次保单；',
 
-  `personal_or_family`   tinyint(2)              DEFAULT NULL COMMENT '保单是个人单还是家庭单：1--个人；2--家庭；',
-  `pay_intv`             varchar(24)             DEFAULT NULL COMMENT '缴费频次：0--一次交清；1--月交；3--季交；6--半年交；12--年交',
-  `pay_period`           int(4)                  DEFAULT NULL COMMENT '缴费期间',
-  `pay_period_unit`      varchar(24)             DEFAULT NULL COMMENT '缴费期间单位：M--月；S--季度；HY--半年；Y--年；A--缴至',
-  `insure_period`        int(10)                 DEFAULT NULL COMMENT '保障期间',
-  `insure_period_unit`   varchar(24)             DEFAULT NULL COMMENT '保障期间单位：M--月；S--季度；HY--半年；Y--年；A--保至',
-  `draw_period`          int(10)                 DEFAULT NULL COMMENT '领取时长',
-  `draw_period_unit`     varchar(24)             DEFAULT NULL COMMENT '领取年限单位：M--月；S--季度；HY--半年；Y--年；A--领取至',
-  `draw_start_age`       int(10)                 DEFAULT NULL COMMENT '开始领取年龄',
-  `advanced_age_flag`    tinyint(2)              DEFAULT NULL COMMENT '是否含高龄：0--不含高龄；1--含高龄',
+  `personal_or_family` tinyint(2)              DEFAULT NULL COMMENT '保单是个人单还是家庭单：1--个人；2--家庭；',
+  `pay_intv`           varchar(24)             DEFAULT NULL COMMENT '缴费频次：0--一次交清；1--月交；3--季交；6--半年交；12--年交',
+  `pay_period`         int(4)                  DEFAULT NULL COMMENT '缴费期间',
+  `pay_period_unit`    varchar(24)             DEFAULT NULL COMMENT '缴费期间单位：M--月；S--季度；HY--半年；Y--年；A--缴至',
+  `insure_period`      int(10)                 DEFAULT NULL COMMENT '保障期间',
+  `insure_period_unit` varchar(24)             DEFAULT NULL COMMENT '保障期间单位：M--月；S--季度；HY--半年；Y--年；A--保至',
+  `draw_period`        int(10)                 DEFAULT NULL COMMENT '领取时长',
+  `draw_period_unit`   varchar(24)             DEFAULT NULL COMMENT '领取年限单位：M--月；S--季度；HY--半年；Y--年；A--领取至',
+  `draw_start_age`     int(10)                 DEFAULT NULL COMMENT '开始领取年龄',
+  `advanced_age_flag`  tinyint(2)              DEFAULT NULL COMMENT '是否含高龄：0--不含高龄；1--含高龄',
 
-  `appnt_customer_id`    int(11)                 DEFAULT NULL COMMENT '投保人ID',
-  `appnt_name`           varchar(128)            DEFAULT NULL COMMENT '投保人姓名',
-  `insured_customer_ids` varchar(512)            DEFAULT NULL COMMENT '被保人ID列表，英文逗号分隔',
-  `insured_names`        varchar(512)            DEFAULT NULL COMMENT '被保人姓名列表，英文逗号分隔',
-  `is_legal_bnf`         tinyint(2)              DEFAULT NULL COMMENT '受益人类型：0--法定受益人；1--指定受益人；',
-  `bnf_customer_ids`     varchar(512)            DEFAULT NULL COMMENT '指定受益人表ID列表，英文逗号分隔',
-  `bnf_names`            varchar(512)            DEFAULT NULL COMMENT '指定受益人姓名列表，英文逗号分隔',
-  `create_time`          datetime                DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`          datetime                DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `appnt_name`         varchar(128)            DEFAULT NULL COMMENT '投保人姓名',
+  `insured_names`      varchar(512)            DEFAULT NULL COMMENT '被保人姓名列表，英文逗号分隔',
+  `is_legal_bnf`       tinyint(2)              DEFAULT NULL COMMENT '受益人类型：0--法定受益人；1--指定受益人；',
+  `create_time`        datetime                DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`        datetime                DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ROW_FORMAT = DYNAMIC COMMENT ='保单基本信息表';
 
+CREATE TABLE `pol_appnt`
+(
+  `id`              int NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `policy_id`       int          DEFAULT NULL COMMENT '保单ID',
+  `name`            varchar(20)  DEFAULT NULL COMMENT '投保人姓名',
+  `gender`          char(2)      DEFAULT NULL COMMENT '投保人性别：0男1女',
+  `birthday`        varchar(10)  DEFAULT NULL COMMENT '投保人生日：yyyy-MM-dd',
+  `card_type`       char(4)      DEFAULT NULL COMMENT '投保人证件类型 01 -- 身份证；02 -- 户口本；03 -- 驾照；04 -- 军人证（军官证）；05 -- 士兵证；10 -- 台胞证；11 -- 回乡证；12 -- 出生证；99 -- 其它；A -- 护照；B -- 学生证；C -- 工作证；D -- 无证件；E -- 临时身份证；F -- 警官证；',
+  `card_no`         varchar(20)  DEFAULT NULL COMMENT '投保人身份证号码',
+  `val_start_date`  varchar(10)  DEFAULT NULL COMMENT '证件有效期开始时间：yyyy-MM-dd',
+  `val_end_date`    varchar(10)  DEFAULT NULL COMMENT '证件有效期截至时间：yyyy-MM-dd',
+  `nationality`     varchar(10)  DEFAULT NULL COMMENT '国籍，代码表CHN',
+  `occupation_code` varchar(10)  DEFAULT NULL COMMENT '职业代码',
+  `occupation_name` varchar(10)  DEFAULT NULL COMMENT '职业名称',
+  `mobile`          varchar(11)  DEFAULT NULL COMMENT '手机号码',
+  `email`           varchar(60)  DEFAULT NULL COMMENT '电子邮件',
+  `address_detail`  varchar(150) DEFAULT NULL COMMENT '投保人详细地址',
+  `post_code`       varchar(10)
+) DEFAULT NULL COMMENT '邮政编码',
+  `annual_income` decimal(14,2) DEFAULT NULL COMMENT '投保人年收入',
+  `height` int DEFAULT NULL COMMENT '身高，单位厘米？',
+  `weight` int DEFAULT NULL COMMENT '体重，单位千克',
+  `social_insurance_flag` tinyint(2) DEFAULT 0 COMMENT '是否有社保：0--有社保；1--无社保；',
+  `tax_resident_type` varchar(2)  DEFAULT NULL COMMENT 'A：中国税收居民身份B：既是中国税收居民，又是其他税收管辖区居民C：非中国税收居民',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT=DYNAMIC COMMENT='投保人信息表';
+
+CREATE TABLE `pol_insured`
+(
+  `id`                    int NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `policy_id`             int            DEFAULT NULL COMMENT '保单ID',
+  `name`                  varchar(20)    DEFAULT NULL COMMENT '被保人姓名',
+  `gender`                char(2)        DEFAULT NULL COMMENT '被保人性别：0男1女',
+  `birthday`              varchar(10)    DEFAULT NULL COMMENT '被保人生日：yyyy-MM-dd',
+  `card_type`             char(4)        DEFAULT NULL COMMENT '被保人证件类型：01 -- 身份证；02 -- 户口本；03 -- 驾照；04 -- 军人证（军官证）；05 -- 士兵证；10 -- 台胞证；11 -- 回乡证；12 -- 出生证；99 -- 其它；A -- 护照；B -- 学生证；C -- 工作证；D -- 无证件；E -- 临时身份证；F -- 警官证；',
+  `card_no`               varchar(20)    DEFAULT NULL COMMENT '被保人身份证号码',
+  `val_start_date`        varchar(10)    DEFAULT NULL COMMENT '证件有效期开始时间：yyyy-MM-dd',
+  `val_end_date`          varchar(10)    DEFAULT NULL COMMENT '证件有效期截至时间：yyyy-MM-dd',
+  `nationality`           varchar(10)    DEFAULT NULL COMMENT '国籍，代码表CHN',
+  `occupation_code`       varchar(10)    DEFAULT NULL COMMENT '职业代码',
+  `occupation_name`       varchar(10)    DEFAULT NULL COMMENT '职业名称',
+  `mobile`                varchar(11)    DEFAULT NULL COMMENT '手机号码',
+  `email`                 varchar(60)    DEFAULT NULL COMMENT '电子邮件',
+  `address_detail`        varchar(150)   DEFAULT NULL COMMENT '被保人详细地址',
+  `height`                int            DEFAULT NULL COMMENT '身高，单位厘米？',
+  `weight`                int            DEFAULT NULL COMMENT '体重，单位千克',
+  `post_code`             varchar(6)     DEFAULT NULL COMMENT '邮政编码',
+  `incomes`               decimal(14, 2) DEFAULT NULL COMMENT '被保人年收入',
+  `social_insurance_flag` tinyint(2)     DEFAULT 0 COMMENT '是否有社保：0--有社保；1--无社保；',
+  `tax_resident_type`     varchar(2)     DEFAULT NULL COMMENT 'A：中国税收居民身份B：既是中国税收居民，又是其他税收管辖区居民C：非中国税收居民',
+  `relation_to_app`       varchar(2)     DEFAULT NULL COMMENT '被保人与投保人的关系：00本人；01配偶；02子女；03父母',
+  `create_time`           datetime       DEFAULT NULL COMMENT '创建时间',
+  `update_time`           datetime       DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='被保人信息表';
+
+CREATE TABLE `pol_bnf`
+(
+  `id`                  int NOT NULL AUTO_INCREMENT,
+  `policy_id`           int            DEFAULT NULL COMMENT '保单ID',
+  `relation_to_insured` char(20)       DEFAULT NULL COMMENT '受益人与被保人关系00本人；01配偶；02子女；03父母',
+  `name`                varchar(20)    DEFAULT NULL COMMENT '受益人姓名',
+  `gender`              char(2)        DEFAULT NULL COMMENT '受益人性别：0男1女',
+  `birthday`            varchar(10)    DEFAULT NULL COMMENT '受益人生日：yyyy-MM-dd',
+  `card_type`           char(4)        DEFAULT NULL COMMENT '受益人证件类型',
+  `card_no`             varchar(20)    DEFAULT NULL COMMENT '受益人身份证号码',
+  `val_start_date`      varchar(10)    DEFAULT NULL COMMENT '受益人证件有效起期',
+  `val_end_date`        varchar(10)    DEFAULT NULL COMMENT '受益人证件有效止期',
+  `mobile`              varchar(11)    DEFAULT NULL COMMENT '手机号码',
+  `bnf_rate`            decimal(10, 2) DEFAULT NULL COMMENT '受益人收益比例',
+  `bnf_order`           int            DEFAULT NULL COMMENT '指定受益人时必填',
+  `belong_to_insured`   varchar(10)    DEFAULT NULL COMMENT '所属被保人',
+  `create_time`         datetime       DEFAULT NULL COMMENT '创建时间',
+  `update_time`         datetime       DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='受益人信息表';
+
+
 -- 1个保单<-->[1个产品 + 1个计划代码 + n个(险种代码<-->责任代码)]；
-CREATE TABLE `pol_product_info`
+CREATE TABLE `pol_risk_info`
 (
   `id`                 int(11)        NOT NULL AUTO_INCREMENT,
   `policy_id`          int(11)        NOT NULL COMMENT '保单ID',
@@ -831,7 +899,7 @@ CREATE TABLE `pol_product_info`
   `create_time`        datetime                DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`        datetime                DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ROW_FORMAT = DYNAMIC COMMENT ='保单投保产品表';
+) ROW_FORMAT = DYNAMIC COMMENT ='保单投保险种表';
 
 CREATE TABLE `pol_status`
 (
@@ -924,3 +992,92 @@ CREATE TABLE `ord_payment`
   `update_time`    datetime     DEFAULT current_timestamp COMMENT '更新时间',
   primary key (`id`)
 ) ROW_FORMAT = DYNAMIC COMMENT = '订单支付信息表';
+
+
+CREATE TABLE `pmt_inner_msg`
+(
+  `id`          int(11)      NOT NULL AUTO_INCREMENT,
+  `title`       varchar(128) NOT NULL COMMENT '消息标题',
+  `content`     text         NOT NULL COMMENT '消息内容',
+  `msg_type`    varchar(10)  NOT NULL COMMENT '消息类型',
+  `create_time` datetime     NOT NULL COMMENT '创建时间',
+  `send_count`  int(11) DEFAULT '0' COMMENT '发送人数',
+  `send_id`     int(11)      NOT NULL COMMENT '发送者id',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='站内信内容表';
+
+CREATE TABLE `pmt_inner_msg_send`
+(
+  `id`           int(11)      NOT NULL AUTO_INCREMENT,
+  `rec_id`       int(11)      NOT NULL COMMENT '接收者id',
+  `title`        varchar(128) NOT NULL COMMENT '标题',
+  `inner_msg_id` int(11)      NOT NULL COMMENT 'pmt_inner_msg表id',
+  `send_id`      int(11)      NOT NULL COMMENT '发送者id',
+  `platform`     tinyint(2) DEFAULT NULL COMMENT '平台1宁康保 ',
+  `status`       tinyint(4) DEFAULT '0' COMMENT '0未读，1已读',
+  `create_time`  datetime     NOT NULL,
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='站内信';
+
+CREATE TABLE `pmt_advertisement_info`
+(
+  `id`           bigint(20) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `pic_url`      varchar(200) DEFAULT NULL COMMENT '展示广告地址',
+  `ad_title`     varchar(50)  DEFAULT NULL COMMENT '广告标题',
+  `ad_url`       varchar(200) DEFAULT NULL COMMENT '广告跳转地址',
+  `ad_order`     int(11)      DEFAULT NULL COMMENT '广告展示顺序',
+  `ad_type`      varchar(10)  DEFAULT NULL COMMENT '广告类型(0,不跳转，1产品详情，2文章详情)',
+  `ad_show_area` varchar(10)  DEFAULT NULL COMMENT '广告展示区域(1学吧banner；2保险商场banner；3头条推荐；4即将上线，5客服中心)',
+  `product_id`   int(11)      DEFAULT NULL COMMENT '产品id',
+  `content_id`   int(11)      DEFAULT NULL COMMENT '内容id',
+  `is_use`       int(11)      DEFAULT NULL COMMENT '是否启用0不启用，1启用',
+  `create_time`  datetime     DEFAULT NULL COMMENT '创建时间',
+  `update_time`  datetime     DEFAULT NULL COMMENT '更新时间',
+  `remark`       varchar(50)  DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='广告信息表';
+
+
+CREATE TABLE `pmt_content`
+(
+  `id`          int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `pic_url`     varchar(200) DEFAULT NULL COMMENT '列表图片地址',
+  `title`       varchar(100) DEFAULT NULL COMMENT '标题',
+  `type`        int(11)      DEFAULT NULL COMMENT '1学习文章，2发现产品解读，3发现销售技巧，4发现行业资讯',
+  `content`     longtext CHARACTER SET utf8mb4 COMMENT '专题正文',
+  `status`      tinyint(1)   DEFAULT NULL COMMENT '状态：1显示，0不显示',
+  `sort_index`  int(11)      DEFAULT NULL COMMENT '排序',
+  `tag_list`    varchar(300) DEFAULT NULL COMMENT '标签列表用#分割',
+  `read_number` int(11)      DEFAULT '0' COMMENT '阅读数',
+  `create_time` datetime     DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime     DEFAULT NULL COMMENT '更新时间',
+  `remark`      varchar(50)  DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ROW_FORMAT = DYNAMIC COMMENT ='文章信息表';
+
+
+CREATE TABLE `pmt_poster`
+(
+  `id`          int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `pic_url`     varchar(200) DEFAULT NULL COMMENT '图片地址',
+  `title`       varchar(100) DEFAULT NULL COMMENT '标题',
+  `introduce`   varchar(200) DEFAULT NULL COMMENT '介绍',
+  `type`        int(11)      DEFAULT NULL COMMENT '海报分类1产品，2理念，3问候，4发现',
+  `status`      tinyint(1)   DEFAULT NULL COMMENT '状态：1显示，0不显示',
+  `sort_index`  int(11)      DEFAULT NULL COMMENT '排序',
+  `create_time` datetime     DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime     DEFAULT NULL COMMENT '更新时间',
+  `remark`      varchar(50)  DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) COMMENT ='海报表';
+
+CREATE TABLE `pmt_customer_service`
+(
+  `id`             int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `question_type`  varchar(5)   DEFAULT NULL COMMENT '问题类别1结算开票；2保全理赔；3常见问题',
+  `question_title` varchar(50)  DEFAULT NULL COMMENT '问题标题',
+  `question_info`  varchar(100) DEFAULT NULL COMMENT '问题内容',
+  `status`         tinyint(1)   DEFAULT NULL COMMENT '状态：1显示，0不显示',
+  `create_time`    datetime     DEFAULT NULL COMMENT '创建时间',
+  `update_time`    datetime     DEFAULT NULL COMMENT '更新时间',
+  `remark`         varchar(50)  DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) COMMENT ='客服中心';
